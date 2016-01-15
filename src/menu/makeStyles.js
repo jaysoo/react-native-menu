@@ -33,13 +33,8 @@ module.exports = (React) => {
     backdrop: {
       position: 'absolute',
       top: window.height,
-      right: 0,
       bottom: -window.height,
       left: 0
-    },
-    backdropActive: {
-      top: 0,
-      bottom: 0
     }
   });
 };

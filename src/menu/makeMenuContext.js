@@ -1,20 +1,9 @@
 module.exports = (React, { constants, model, styles }) => {
-const {
-  NativeModules: { UIManager },
-  TouchableWithoutFeedback,
-  View
-} = React;
-
-  // Calls a function once, then never again.
-  const once = (fn) => {
-    let called = false;
-    return (...args) => {
-      if (!called) {
-        called = true;
-        fn(...args);
-      }
-    };
-  };
+  const {
+    NativeModules: { UIManager },
+    TouchableWithoutFeedback,
+    View
+  } = React;
 
   /*
    * The MenuContext provides a tunnel for descendant menu components to access
@@ -34,7 +23,8 @@ const {
         menuIsOpen: false,
         menuOptions: null,
         optionsTop: 0,
-        optionsRight: 0
+        optionsRight: 0,
+        backdropWidth: 0
       };
     },
     childContextTypes: {
@@ -64,7 +54,8 @@ const {
         menuIsOpen: true,
         menuOptions: this._options[name],
         optionsTop,
-        optionsRight
+        optionsRight,
+        backdropWidth: ownWidth
       });
     },
     closeMenu() {
@@ -95,21 +86,34 @@ const {
     },
     render() {
       return (
-        <TouchableWithoutFeedback onPress={this.closeMenu} ref="Container" onLayout={this.onLayout}>
+        <View ref="Container" onLayout={this.onLayout} style={{ flex: 1 }}>
           <View style={this.props.style}>
             { this.props.children }
-            <View style={[
-              styles.optionsContainer,
-              { top: this.state.optionsTop, right: this.state.optionsRight },
-              this.state.menuIsOpen ? null : styles.optionsHidden
-            ]}>
-              { this.state.menuOptions }
-            </View>
           </View>
-        </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={this.closeMenu}>
+            <View  style={[ styles.backdrop
+                          , this.state.menuIsOpen ? { width: this.state.backdropWidth, top: 0, bottom: 0 }: null ]}/>
+          </TouchableWithoutFeedback>
+          <View style={[ styles.optionsContainer
+                       , { top: this.state.optionsTop, right: this.state.optionsRight }
+                       , this.state.menuIsOpen ? null : styles.optionsHidden ]}>
+            { this.state.menuOptions }
+          </View>
+        </View>
       )
     }
   });
+
+  // Calls a function once, then never again.
+  const once = (fn) => {
+    let called = false;
+    return (...args) => {
+      if (!called) {
+        called = true;
+        fn(...args);
+      }
+    };
+  };
 
   return MenuContext;
 };
