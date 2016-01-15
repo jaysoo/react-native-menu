@@ -96,17 +96,42 @@ Please refer to the full working example [here](./Example/Example.js).
 
 ### Usage (API)
 
-`Menu`:
+#### MenuContext
+
+Methods:
+
+- openMenu() -- Opens the menu
+- closeMenu() -- Closes the menu
+- toggleMenu() -- Toggle the menu between open and close
+
+Props:
+
+*None*
+
+#### Menu
+
+Props:
 
 - `onSelect` -- This function is called with the value the `MenuOption` that has been selected by the user
 - `style` -- Overrides default style
 
-`MenuTrigger`:
+#### MenuTrigger
+
+Props:
 
 - `disabled` -- If true, then this trigger is not pressable
 - `style` -- Overrides default style
 
-`MenuOption`:
+#### MenuOptions
+
+Props:
+
+- `style` -- Overrides default style
+
+
+#### MenuOption
+
+Props:
 
 - `disabled` -- If true, then this option is not selectable
 - `style` -- Overrides default style

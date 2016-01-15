@@ -80,7 +80,6 @@ const MenuContext = React.createClass({
     this._options[name] = options;
   },
   render() {
-    console.log(this.state.optionsRight);
     return (
       <TouchableWithoutFeedback onPress={this.closeMenu} ref="Container" onLayout={this.onLayout}>
         <View style={this.props.style}>

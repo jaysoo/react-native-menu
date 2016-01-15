@@ -10,6 +10,12 @@ const Menu = require('react-native-menu');
 const { MenuContext, MenuTrigger, MenuOptions, MenuOption } = Menu;
 
 const Example = React.createClass({
+  componentDidMount() {
+    // We can use the public context API to open/close/toggle the menu.
+    //setInterval(() => {
+    //  this.refs.MenuContext.toggleMenu('menu1');
+    //}, 2000);
+  },
   getInitialState() {
     return {
       message: 'Click the top-right menu triggers',
@@ -26,7 +32,7 @@ const Example = React.createClass({
   },
   render() {
     return (
-      <MenuContext style={{ flex: 1 }}>
+      <MenuContext style={{ flex: 1 }} ref="MenuContext">
         <View style={styles.topbar}>
           <View style={styles.title}>
             <Text style={styles.titleText}>First</Text>
