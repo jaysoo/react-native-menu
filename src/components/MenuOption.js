@@ -5,6 +5,7 @@ const {
 } = React;
 
 const { IMenuController } = require('./model');
+const styles = require('./styles');
 
 const MenuOption = React.createClass({
   displayName: 'MenuOption',
@@ -17,7 +18,7 @@ const MenuOption = React.createClass({
   render() {
     return (
       <TouchableWithoutFeedback onPress={this.onPress}>
-        <View style={this.props.style}>
+        <View style={[styles.option, this.props.style]}>
           { this.props.children }
         </View>
       </TouchableWithoutFeedback>

@@ -86,7 +86,7 @@ const MenuContext = React.createClass({
         <View style={this.props.style}>
           { this.props.children }
           <View style={[
-            styles.options,
+            styles.optionsContainer,
             { top: this.state.optionsTop, right: this.state.optionsRight },
             this.state.menuIsOpen ? null : styles.optionsHidden
           ]}>
