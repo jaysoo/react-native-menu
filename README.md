@@ -80,7 +80,7 @@ render() {
 render() {
   return (
     <View>
-        <Menu onSelect={...}>
+      <Menu onSelect={...}>
         <MenuTrigger>
           <Text>OPEN</Text>
         </MenuTrigger>
