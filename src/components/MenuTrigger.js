@@ -9,10 +9,11 @@ const { IMenuController } = require('./model');
 const MenuTrigger = React.createClass({
   displayName: 'MenuTrigger',
   contextTypes: {
-    menuController: IMenuController
+    menuController: IMenuController,
+    getClosestMenuName: React.PropTypes.func.isRequired
   },
   onPress() {
-    this.context.menuController.open();
+    this.context.menuController.toggle(this.context.getClosestMenuName());
   },
   render() {
     return (

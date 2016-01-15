@@ -5,6 +5,7 @@ const {
   View
 } = React;
 
+const { DEFAULT_MENU_NAME } = require('./constants');
 const { IMenuController } = require('./model');
 const styles = require('./styles');
 
@@ -16,12 +17,13 @@ const styles = require('./styles');
 const MenuContext = React.createClass({
   displayName: 'MenuContext',
   componentWillMount() {
-    this._options = null;
+    this._menuMeasurements = {};
+    this._options = {};
   },
   getInitialState() {
     return {
       menuIsOpen: false,
-      menuOptions: this._options,
+      menuOptions: null,
       optionsTop: 0,
       optionsRight: 0
     };
@@ -32,21 +34,21 @@ const MenuContext = React.createClass({
   getChildContext() {
     const menuController = {
       open: this.openMenu,
+      close: this.closeMenu,
+      toggle: this.toggleMenu,
       onMenuMeasure: this.onMenuMeasure,
       registerOptionsElement: this.registerOptionsElement
     };
     return { menuController };
   },
-  // registerOptionsElement :: ReactElement -> Effect MenuOpen
-  openMenu() {
-    const { px: menuPX, py: menuPY } = this._menuMeasurements;
-    const { px: ownPX, py: ownPY } = this._ownMeasurements;
+  openMenu(name = DEFAULT_MENU_NAME) {
+    const { w: menuWidth, px: menuPX, py: menuPY } = this._menuMeasurements[name];
+    const { w: ownWidth, py: ownPY } = this._ownMeasurements;
     const optionsTop = menuPY - ownPY;
-    const optionsRight = menuPX - ownPX;
-    console.log(optionsTop, optionsRight);
+    const optionsRight = ownWidth - menuPX - menuWidth;
     this.setState({
       menuIsOpen: true,
-      menuOptions: this._options,
+      menuOptions: this._options[name],
       optionsTop,
       optionsRight
     });
@@ -57,8 +59,15 @@ const MenuContext = React.createClass({
       menuOptions: null
     });
   },
-  onMenuMeasure(x, y, w, h, px, py) {
-    this._menuMeasurements = { x, y, w, h, px, py };
+  toggleMenu(name = DEFAULT_MENU_NAME) {
+    if (this.state.menuIsOpen) {
+      this.closeMenu();
+    } else {
+      this.openMenu(name);
+    }
+  },
+  onMenuMeasure(name, x, y, w, h, px, py) {
+    this._menuMeasurements[name] = { x, y, w, h, px, py };
   },
   onLayout() {
     const handle = React.findNodeHandle(this.refs.Container);
@@ -67,10 +76,11 @@ const MenuContext = React.createClass({
     });
   },
   // registerOptionsElement :: ReactElement -> void
-  registerOptionsElement(options) {
-    this._options = options;
+  registerOptionsElement(name = DEFAULT_MENU_NAME, options) {
+    this._options[name] = options;
   },
   render() {
+    console.log(this.state.optionsRight);
     return (
       <TouchableWithoutFeedback onPress={this.closeMenu} ref="Container" onLayout={this.onLayout}>
         <View style={this.props.style}>

@@ -12,7 +12,7 @@ const MenuOption = React.createClass({
     menuController: IMenuController
   },
   onPress() {
-    this.props.onPress(this.props.value)
+    !this.props.disabled && this.props.onPress(this.props.value)
   },
   render() {
     return (
