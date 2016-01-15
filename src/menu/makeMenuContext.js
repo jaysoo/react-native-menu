@@ -1,12 +1,20 @@
 module.exports = (React, { constants, model, styles }) => {
-  const {
-    Dimensions,
-    NativeModules: { UIManager },
-    TouchableWithoutFeedback,
-    View
-  } = React;
+const {
+  NativeModules: { UIManager },
+  TouchableWithoutFeedback,
+  View
+} = React;
 
-  const window = Dimensions.get('window');
+  // Calls a function once, then never again.
+  const once = (fn) => {
+    let called = false;
+    return (...args) => {
+      if (!called) {
+        called = true;
+        fn(...args);
+      }
+    };
+  };
 
   /*
    * The MenuContext provides a tunnel for descendant menu components to access
@@ -18,6 +26,8 @@ module.exports = (React, { constants, model, styles }) => {
     componentWillMount() {
       this._menuMeasurements = {};
       this._options = {};
+      // Only do this once on initial layout.
+      this.onLayout = once(this.onLayout);
     },
     getInitialState() {
       return {
@@ -46,9 +56,10 @@ module.exports = (React, { constants, model, styles }) => {
       }
 
       const { w: menuWidth, px: menuPX, py: menuPY } = this._menuMeasurements[name];
-      const { w: ownWidth, py: ownPY } = this._ownMeasurements;
+      const { w: ownWidth, px: ownPX, py: ownPY } = this._ownMeasurements;
       const optionsTop = menuPY - ownPY;
-      const optionsRight = ownWidth - menuPX - menuWidth;
+      const optionsRight = ownWidth + ownPX - menuPX - menuWidth;
+
       this.setState({
         menuIsOpen: true,
         menuOptions: this._options[name],
@@ -84,20 +95,18 @@ module.exports = (React, { constants, model, styles }) => {
     },
     render() {
       return (
-        <View ref="Container" onLayout={this.onLayout} style={{ flex: 1 }}>
+        <TouchableWithoutFeedback onPress={this.closeMenu} ref="Container" onLayout={this.onLayout}>
           <View style={this.props.style}>
             { this.props.children }
+            <View style={[
+              styles.optionsContainer,
+              { top: this.state.optionsTop, right: this.state.optionsRight },
+              this.state.menuIsOpen ? null : styles.optionsHidden
+            ]}>
+              { this.state.menuOptions }
+            </View>
           </View>
-          <TouchableWithoutFeedback onPress={this.closeMenu}>
-            <View  style={[ styles.backdrop
-                          , this.state.menuIsOpen ? styles.backdropActive : null ]}/>
-          </TouchableWithoutFeedback>
-          <View style={[ styles.optionsContainer
-                       , { top: this.state.optionsTop, right: this.state.optionsRight }
-                       , this.state.menuIsOpen ? null : styles.optionsHidden ]}>
-            { this.state.menuOptions }
-          </View>
-        </View>
+        </TouchableWithoutFeedback>
       )
     }
   });
