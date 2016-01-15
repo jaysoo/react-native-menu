@@ -1,13 +1,28 @@
 {
   "name": "react-native-menu",
   "version": "0.18.0",
-  "description": "",
+  "description": "A menu component for Android and iOS that provides a dropdown similar to Android's Spinner, but does not retain a persistent selection.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaysoo/react-native-parallax-scroll-view"
+  },
   "main": "src/index.js",
   "files": [
     "rn-menu-android.gif",
     "rn-menu-ios.gif",
     "README.md",
+    "LICENSE",
     "src"
+  ],
+  "keywords": [
+    "react-native",
+    "react",
+    "menu",
+    "spinner",
+    "dropdown",
+    "react-component",
+    "ios",
+    "android"
   ],
   "author": "Jack Hsu <jack.hsu@gmail.com> (http://jaysoo.ca/)",
   "license": "ISC"
