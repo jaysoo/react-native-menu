@@ -32,7 +32,7 @@ import Menu, {
 render() {
   return (
     <MenuContext flex={{ flex: 1 }}>
-      <Menu>
+      <Menu onSelect={(value) => console.log(`User selected the number ${value}`)>
         <MenuTrigger>
           <Text>open</Text>
         </MenuTrigger>
