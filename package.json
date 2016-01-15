@@ -1,11 +1,14 @@
 {
   "name": "react-native-menu",
-  "version": "1.0.0",
+  "version": "0.18.0",
   "description": "",
   "main": "src/index.js",
+  "files": [
+    "rn-menu-android.gif",
+    "rn-menu-ios.gif",
+    "README.md",
+    "src"
+  ],
   "author": "Jack Hsu <jack.hsu@gmail.com> (http://jaysoo.ca/)",
-  "license": "ISC",
-  "dependencies": {
-    "hoist-non-react-statics": "^1.0.3"
-  }
+  "license": "ISC"
 }
