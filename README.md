@@ -80,18 +80,18 @@ render() {
 render() {
   return (
     <View>
-        <Menu onSelect={...}>
-        <MenuTrigger>
-          <Text>OPEN</Text>
-        </MenuTrigger>
-        <MenuOptions>
-          <MenuOption value={1}>
-            <Text>One</Text>
-          </MenuOption>
-          <MenuOption value={2}>
-            <Text>Two</Text>
-          </MenuOption>
-        </MenuOptions>
+      <Menu onSelect={...}>
+      <MenuTrigger>
+        <Text>OPEN</Text>
+      </MenuTrigger>
+      <MenuOptions>
+        <MenuOption value={1}>
+          <Text>One</Text>
+        </MenuOption>
+        <MenuOption value={2}>
+          <Text>Two</Text>
+        </MenuOption>
+      </MenuOptions>
       </Menu>
     </View>
   );
