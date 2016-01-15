@@ -7,14 +7,14 @@ const styles = StyleSheet.create({
   optionsContainer: {
     position: 'absolute',
     borderRadius: 2,
-    overflow: 'hidden',
     backgroundColor: 'white',
     width: 200,
 
     // Shadow only works on iOS.
-    shadowColor: 'rgba(0, 0, 0, .8)',
-    shadowOffset: { width: 5, height: 5 },
-    shadowRadius: 3,
+    shadowColor: 'black',
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 3, height: 3 },
+    shadowRadius: 4,
 
     // This will elevate the view on Android, causing shadow to be drawn.
     elevation: 5

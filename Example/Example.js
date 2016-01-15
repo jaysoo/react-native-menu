@@ -27,13 +27,19 @@ const Example = React.createClass({
       firstMenuDisabled: false
     };
   },
-  onSelect(value) {
+  setMessage(value) {
     if (typeof value === 'object') {
       this.setState({ message: `Woah!\n\nYou selected an object:\n\n${JSON.stringify(value)}` });
     } else {
       this.setState({ message: `You selected "${value}"` });
     }
     return value !== 'do not close';
+  },
+  setFirstMenuDisabled(disabled) {
+    this.setState({
+      message: `First menu is ${disabled ? 'disabled' : 'enabled'}`,
+      firstMenuDisabled: disabled
+    });
   },
   render() {
     return (
@@ -42,7 +48,7 @@ const Example = React.createClass({
           <View style={styles.title}>
             <Text style={styles.titleText}>First</Text>
           </View>
-          <Menu name ="menu1" onSelect={this.onSelect}>
+          <Menu name ="menu1" onSelect={this.setMessage}>
             <MenuTrigger disabled={this.state.firstMenuDisabled} style={styles.menuTrigger}>
               <Text style={styles.menuTriggerText}>&#8942;</Text>
             </MenuTrigger>
@@ -67,7 +73,7 @@ const Example = React.createClass({
           <View style={styles.title}>
             <Text style={styles.titleText}>Second</Text>
           </View>
-          <Menu name="menu2" onSelect={(disabled) => this.setState({ firstMenuDisabled: disabled })}>
+          <Menu name="menu2" onSelect={this.setFirstMenuDisabled}>
             <MenuTrigger style={styles.menuTrigger}>
               <Text style={styles.menuTriggerText}>&#8942;</Text>
             </MenuTrigger>
@@ -134,7 +140,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#eee'
   },
-  content: { flex: 1, alignItems: 'center', backgroundColor: 'lightgrey',justifyContent: 'center' },
+  content: { flex: 1, alignItems: 'center', backgroundColor: 'white',justifyContent: 'center' },
   contentText: { fontSize: 20 }
 });
 
