@@ -1,9 +1,12 @@
 module.exports = (React, { constants, model, styles }) => {
   const {
+    Dimensions,
     NativeModules: { UIManager },
     TouchableWithoutFeedback,
     View
   } = React;
+
+  const window = Dimensions.get('window');
 
   /*
    * The MenuContext provides a tunnel for descendant menu components to access
@@ -81,18 +84,20 @@ module.exports = (React, { constants, model, styles }) => {
     },
     render() {
       return (
-        <TouchableWithoutFeedback onPress={this.closeMenu} ref="Container" onLayout={this.onLayout}>
+        <View ref="Container" onLayout={this.onLayout} style={{ flex: 1 }}>
           <View style={this.props.style}>
             { this.props.children }
-            <View style={[
-              styles.optionsContainer,
-              { top: this.state.optionsTop, right: this.state.optionsRight },
-              this.state.menuIsOpen ? null : styles.optionsHidden
-            ]}>
-              { this.state.menuOptions }
-            </View>
           </View>
-        </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={this.closeMenu}>
+            <View  style={[ styles.backdrop
+                          , this.state.menuIsOpen ? styles.backdropActive : null ]}/>
+          </TouchableWithoutFeedback>
+          <View style={[ styles.optionsContainer
+                       , { top: this.state.optionsTop, right: this.state.optionsRight }
+                       , this.state.menuIsOpen ? null : styles.optionsHidden ]}>
+            { this.state.menuOptions }
+          </View>
+        </View>
       )
     }
   });

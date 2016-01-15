@@ -28,10 +28,10 @@ const Example = React.createClass({
     };
   },
   setMessage(value) {
-    if (typeof value === 'object') {
-      this.setState({ message: `Woah!\n\nYou selected an object:\n\n${JSON.stringify(value)}` });
-    } else {
+    if (typeof value === 'string') {
       this.setState({ message: `You selected "${value}"` });
+    } else {
+      this.setState({ message: `Woah!\n\nYou selected an object:\n\n${JSON.stringify(value)}` });
     }
     return value !== 'do not close';
   },
@@ -95,7 +95,7 @@ const Example = React.createClass({
           </Menu>
         </View>
         <View style={styles.content}>
-          <Text style={styles.contentText}>
+          <Text style={styles.contentText} onPress={() => React.ToastAndroid.show('Hello!', React.ToastAndroid.SHORT)}>
             { this.state.message }
           </Text>
         </View>
