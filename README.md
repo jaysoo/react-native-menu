@@ -21,8 +21,12 @@ $ npm install react-native-menu --save
 ## Basic Usage
 
 ```js
-import Menu from 'react-native-menu';
-const { MenuContext, MenuOptions, MenuOption, MenuTrigger } = Menu;
+import Menu, {
+  MenuContext,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger
+} from 'react-native-menu';
 
 // Inside of a component's render() method:
 render() {

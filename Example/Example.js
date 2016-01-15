@@ -6,8 +6,13 @@ const {
   Text,
   View
   } = React;
-const Menu = require('react-native-menu');
-const { MenuContext, MenuTrigger, MenuOptions, MenuOption } = Menu;
+
+import Menu, {
+  MenuContext,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger
+} from 'react-native-menu';
 
 const Example = React.createClass({
   componentDidMount() {
