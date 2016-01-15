@@ -42,6 +42,10 @@ const MenuContext = React.createClass({
     return { menuController };
   },
   openMenu(name = DEFAULT_MENU_NAME) {
+    if (!this._menuMeasurements[name]) {
+      throw new Error(`MenuContext cannot find a Menu with name ${name} to open.`);
+    }
+
     const { w: menuWidth, px: menuPX, py: menuPY } = this._menuMeasurements[name];
     const { w: ownWidth, py: ownPY } = this._ownMeasurements;
     const optionsTop = menuPY - ownPY;

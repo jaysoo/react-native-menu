@@ -47,9 +47,18 @@ const Menu = React.createClass({
     }
   },
   render() {
-    const { rest, options } = this.props.children.reduce((accum, child) => {
+    const { children, name } = this.props;
+
+    if (!Array.isArray(children)) {
+      throw new Error('Menu component is missing required children components MenuTrigger and MenuOptions.')
+    }
+
+    const { rest, options } = children.reduce((accum, child) => {
       switch (child.type) {
         case MenuOptions:
+          if (accum.options) {
+            throw new Error('Menu component has two MenuOptions children, but it can only use one. Please remove one of them.')
+          }
           accum.options = React.cloneElement(child, { onSelect: this.onSelect });
           break;
         default:
@@ -58,7 +67,11 @@ const Menu = React.createClass({
       return accum;
     }, { options: null, rest: [] });
 
-    this.context.menuController.registerOptionsElement(this.props.name, options);
+    if (!options) {
+      throw new Error('Menu component is missing required child component MenuOptions.')
+    }
+
+    this.context.menuController.registerOptionsElement(name, options);
 
     return (
       <View style={this.props.style} ref="Menu" onLayout={this.onLayout}>
