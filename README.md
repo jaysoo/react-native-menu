@@ -43,11 +43,11 @@ render() {
           <MenuOption value={2}>
             <Text>Two</Text>
           </MenuOption>
-          <MenuOption value={3}>
-            <Text>Three</Text>
-          </MenuOption>
         </MenuOptions>
       </Menu>
+      <View>
+        <Text>Some other content...</Text>
+      </View>
     </MenuContext>
   );
 }
