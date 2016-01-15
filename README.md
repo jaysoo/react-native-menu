@@ -16,7 +16,7 @@ $ npm install react-native-menu --save
 
 | iOS | Android |
 | --- | ------- |
-| ![](./demo.ios.gif) | ![](./demo.android.gif) |
+| ![](./demo-ios.gif) | ![](./demo-android.gif) |
 
 ## Basic Usage
 
@@ -101,8 +101,8 @@ Props:
 Props:
 
 - `style` -- Overrides default style properties (user-defined style will take priority)
- 
-**Note:** The default style for `MenuOptions` is as follows: 
+
+**Note:** The default style for `MenuOptions` is as follows:
 
 ```js
 {
