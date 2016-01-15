@@ -47,31 +47,66 @@ render() {
 }
 ```
 
-## Examples
+## Example
 
-Please refer to the [ListView example](./examples/ListView/Talks.js) provided to see how `ParallaxScrollView` can be used in
-combination with `ListView`.
+**Important:** In order for the `<Menu/>` to work, you need to mount `<MenuContext/>` as an ancestor to `<Menu/>`. This allows
+the menu to open on top of all other components mounted under `<MenuContext/>` -- basically, the menu will be moved
+to be the last child of the context.
 
-The [Android ListView example](./examples/ListView/index.android.js) shows how you can use `PullToRefreshViewAndroid` with `ParallaxScrollView`.
+You must also have a `<MenuTrigger/>` and a `<MenuOptions/>` as direct children under `<Menu/>`. The `MenuTrigger` component
+opens the menu when pressed. The `MenuOptions` component can take *any* children, but you need at least one `MenuOption`
+child in order for the menu to actually do anything.
 
-There are more examples in the [examples](./examples) folder.
+The `MenuOption` component can take *any* children.
 
-## Usage (API)
+```js
+// App.js
+render() {
+  return (
+    <MenuContext>
+      <SomeOtherComponent/>
+      <YetAnotherComponent/>
+    </MenuContext>
+  );
+}
 
-All of the properties of `ScrollView` are supported. Please refer to the
-[`ScrollView` documentation](https://facebook.github.io/react-native/docs/scrollview.html) for more detail.
+// SomeOtherComponent.js
+render() {
+  return (
+    <View>
+        <Menu onSelect={...}>
+        <MenuTrigger>
+          <Text>OPEN</Text>
+        </MenuTrigger>
+        <MenuOptions>
+          <MenuOption value={1}>
+            <Text>One</Text>
+          </MenuOption>
+          <MenuOption value={2}>
+            <Text>Two</Text>
+          </MenuOption>
+        </MenuOptions>
+      </Menu>
+    </View>
+  );
+}
+```
 
-The `ParallaxScrollView` component adds a few additional properties, as described below.
+Please refer to the full working example [here](./Example/Example.js).
 
-| Property | Type | Required | Description |
-| -------- | ---- | -------- | ----------- |
-| `renderParallaxHeader` |  `func` | **Yes** |This renders the parallax header above the background. |
-| `parallaxHeaderHeight` | `number` | **Yes** |This is the height of parallax header. |
-| `headerBackgroundColor` | `string` | No | This is the background color of the sticky header, and also used as parallax header background color if `renderBackground` is not provided. (Defaults to `'#000'`) |
-| `contentBackgroundColor` | `string` | No | This is the background color of the content. (Defaults to `'#fff'`) |
-| `renderBackground` | `func` | No | This renders the background of the parallax header. Can be used to display cover images for example. (Defaults to an opaque background using `headerBackgroundColor`) |
-| `renderStickyHeader` | `func` | No | This renders an optional sticky header that will stick to the top of view when parallax header scrolls up. |
-| `stickyHeaderHeight` | `number` | If `renderStickyHeader` is used | If `renderStickyHeader` is set, then its height must be specified. |
-| `renderFixedHeader` | `func` | No | This renders an optional fixed header that will always be visible and fixed to the top of the view (and sticky header). You must set its height and width appropriately. |
-| `renderScrollComponent` | `func` | No | A function with input `props` and outputs a `ScrollView`-like component in which the content is rendered. This is useful if you want to provide your own scrollable component. (See: [https://github.com/exponentjs/react-native-scrollable-mixin](https://github.com/exponentjs/react-native-scrollable-mixin)) (By default, returns a `ScrollView` with the given props) |
-| `onChangeHeaderVisibility` | `func` | No | A callback function that is invoked when the parallax header is hidden or shown (as the user is scrolling). Function is called with a `boolean` value to indicate whether header is visible or not. |
+### Usage (API)
+
+`Menu`:
+
+- `onSelect` -- This function is called with the value the `MenuOption` that has been selected by the user
+- `style` -- Overrides default style
+
+`MenuTrigger`:
+
+- `disabled` -- If true, then this trigger is not pressable
+- `style` -- Overrides default style
+
+`MenuOption`:
+
+- `disabled` -- If true, then this option is not selectable
+- `style` -- Overrides default style

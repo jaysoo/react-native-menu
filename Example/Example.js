@@ -11,7 +11,10 @@ const { MenuContext, MenuTrigger, MenuOptions, MenuOption } = Menu;
 
 const Example = React.createClass({
   getInitialState() {
-    return { message: 'Click the top-right menu triggers' };
+    return {
+      message: 'Click the top-right menu triggers',
+      firstMenuDisabled: false
+    };
   },
   onSelect(value) {
     if (typeof value === 'object') {
@@ -29,7 +32,7 @@ const Example = React.createClass({
             <Text style={styles.titleText}>First</Text>
           </View>
           <Menu name ="menu1" onSelect={this.onSelect}>
-            <MenuTrigger style={styles.menuTrigger}>
+            <MenuTrigger disabled={this.state.firstMenuDisabled} style={styles.menuTrigger}>
               <Text style={styles.menuTriggerText}>&#8942;</Text>
             </MenuTrigger>
             <MenuOptions style={styles.menuOptions}>
@@ -53,20 +56,24 @@ const Example = React.createClass({
           <View style={styles.title}>
             <Text style={styles.titleText}>Second</Text>
           </View>
-          <Menu name="menu2">
+          <Menu name="menu2" onSelect={(disabled) => this.setState({ firstMenuDisabled: disabled })}>
             <MenuTrigger style={styles.menuTrigger}>
               <Text style={styles.menuTriggerText}>&#8942;</Text>
             </MenuTrigger>
             <MenuOptions>
-              <MenuOption value={1}>
-                <Text>One</Text>
-              </MenuOption>
-              <MenuOption value={2}>
-                <Text>Two</Text>
-              </MenuOption>
-              <MenuOption value={3}>
-                <Text>Three</Text>
-              </MenuOption>
+              {
+                this.state.firstMenuDisabled
+                  ? (
+                    <MenuOption value={false}>
+                      <Text>enable first menu</Text>
+                    </MenuOption>
+                  )
+                  : (
+                  <MenuOption value={true}>
+                    <Text>disable first menu</Text>
+                  </MenuOption>
+                )
+              }
             </MenuOptions>
           </Menu>
         </View>

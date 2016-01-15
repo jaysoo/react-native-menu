@@ -1,5 +1,6 @@
 const React = require('react-native');
 const {
+  TouchableWithoutFeedback,
   View
 } = React;
 
@@ -11,11 +12,13 @@ const MenuOptions = React.createClass({
   },
   render() {
     return (
-      <View style={[styles.options, this.props.style]}>
-        { React.Children.map(this.props.children, (x) => (
-          React.cloneElement(x, { onPress: this.onSelect })
-        ) ) }
-      </View>
+      <TouchableWithoutFeedback style={[styles.options, this.props.style]}>
+        <View>
+          { React.Children.map(this.props.children, (x) => (
+            React.cloneElement(x, { onPress: this.onSelect })
+          ) ) }
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 });
