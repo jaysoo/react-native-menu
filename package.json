@@ -39,5 +39,8 @@
     "react": "^0.14.6",
     "react-addons-test-utils": "^0.14.6",
     "sinon": "^1.17.2"
+  },
+  "dependencies": {
+    "react-timer-mixin": "^0.13.3"
   }
 }

@@ -4,6 +4,24 @@ module.exports = (React, { constants, model, styles }) => {
     TouchableWithoutFeedback,
     View
   } = React;
+  const ScaleAnimationView = require('./makeScaleAnimationView')(React);
+
+  // Calls a function once, then never again.
+  const once = (fn) => {
+    let called = false;
+    return (...args) => {
+      if (!called) {
+        called = true;
+        fn(...args);
+      }
+    };
+  };
+
+  const makeOptions = (options, { top, right }) => (
+    <ScaleAnimationView style={[ styles.optionsContainer, { top, right }]}>
+      { options }
+    </ScaleAnimationView>
+  );
 
   /*
    * The MenuContext provides a tunnel for descendant menu components to access
@@ -52,9 +70,7 @@ module.exports = (React, { constants, model, styles }) => {
 
       this.setState({
         menuIsOpen: true,
-        menuOptions: this._options[name],
-        optionsTop,
-        optionsRight,
+        menuOptions: makeOptions(this._options[name], { top: optionsTop, right: optionsRight }),
         backdropWidth: ownWidth
       });
     },
@@ -91,29 +107,14 @@ module.exports = (React, { constants, model, styles }) => {
             { this.props.children }
           </View>
           <TouchableWithoutFeedback onPress={this.closeMenu}>
-            <View  style={[ styles.backdrop
+            <View style={[ styles.backdrop
                           , this.state.menuIsOpen ? { width: this.state.backdropWidth, top: 0, bottom: 0 }: null ]}/>
           </TouchableWithoutFeedback>
-          <View style={[ styles.optionsContainer
-                       , { top: this.state.optionsTop, right: this.state.optionsRight }
-                       , this.state.menuIsOpen ? null : styles.optionsHidden ]}>
-            { this.state.menuOptions }
-          </View>
+          { this.state.menuOptions }
         </View>
       )
     }
   });
-
-  // Calls a function once, then never again.
-  const once = (fn) => {
-    let called = false;
-    return (...args) => {
-      if (!called) {
-        called = true;
-        fn(...args);
-      }
-    };
-  };
 
   return MenuContext;
 };
