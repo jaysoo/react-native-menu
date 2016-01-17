@@ -20,6 +20,39 @@ $ npm install react-native-menu --save
 
 ## Basic Usage
 
+```js
+import React, { View, Text, AppRegistry } from 'react-native';
+import Menu, { MenuContext, MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
+
+const App = () => (
+  <MenuContext style={{ flex: 1 }}>
+    <TopNavigation/>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Hello!</Text></View>
+  </MenuContext>
+);
+
+const TopNavigation = () => (
+  <View style={{ padding: 10, flexDirection: 'row', backgroundColor: 'pink' }}>
+    <View style={{ flex: 1 }}><Text>My App</Text></View>
+    <Menu onSelect={(value) => alert(`User selected the number ${value}`)}>
+      <MenuTrigger>
+        <Text style={{ fontSize: 20 }}>&#8942;</Text>
+      </MenuTrigger>
+      <MenuOptions>
+        <MenuOption value={1}>
+          <Text>One</Text>
+        </MenuOption>
+        <MenuOption value={2}>
+          <Text>Two</Text>
+        </MenuOption>
+      </MenuOptions>
+    </Menu>
+  </View>
+);
+
+AppRegistry.registerComponent('Example', () => App);
+```
+
 **Important:** In order for the `<Menu/>` to work, you need to mount `<MenuContext/>` as an ancestor to `<Menu/>`. This allows
 the menu to open on top of all other components mounted under `<MenuContext/>` -- basically, the menu will be moved
 to be the last child of the context.
@@ -30,44 +63,7 @@ child in order for the menu to actually do anything.
 
 The `MenuOption` component can take *any* children.
 
-```js
-// App.js
-render() {
-  return (
-    <MenuContext>
-      <ChildOne/>
-      <ChildTwo/>
-    </MenuContext>
-  );
-}
-
-// ChildTwo.js
-render() {
-  return (
-    <View>
-      <Menu onSelect={(value) => console.log(`User selected the number ${value}`)>
-        <MenuTrigger>
-          <Text>open</Text>
-        </MenuTrigger>
-        <MenuOptions>
-          <MenuOption value={1}>
-            <Text>One</Text>
-          </MenuOption>
-          <MenuOption value={2}>
-            <Text>Two</Text>
-          </MenuOption>
-        </MenuOptions>
-      </Menu>
-      <View>
-        <Text>Some other content...</Text>
-      </View>
-    </View>
-  );
-}
-```
-
 Please refer to the full working example [here](./Example/Example.js).
-
 
 ## API
 
