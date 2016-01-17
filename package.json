@@ -11,8 +11,8 @@
   },
   "main": "src/index.js",
   "files": [
-    "demo.android.2.gif",
-    "demo.ios.2.gif",
+    "android.demo.gif",
+    "ios.demo.gif",
     "README.md",
     "LICENSE",
     "src"

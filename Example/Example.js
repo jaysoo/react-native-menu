@@ -23,8 +23,9 @@ const Example = React.createClass({
   },
   getInitialState() {
     return {
-      message: 'Click the top-right menu triggers',
-      firstMenuDisabled: false
+      message: 'Try clicking the top-right menus',
+      firstMenuDisabled: false,
+      dropdownSelection: '-- Choose --'
     };
   },
   setMessage(value) {
@@ -46,7 +47,7 @@ const Example = React.createClass({
       <MenuContext style={{ flex: 1 }} ref="MenuContext">
         <View style={styles.topbar}>
           <View style={styles.title}>
-            <Text style={styles.titleText}>First</Text>
+            <Text style={styles.titleText}>First menu...</Text>
           </View>
           <Menu name ="menu1" onSelect={this.setMessage}>
             <MenuTrigger disabled={this.state.firstMenuDisabled} style={styles.menuTrigger}>
@@ -71,7 +72,7 @@ const Example = React.createClass({
         </View>
         <View style={[styles.topbar, { backgroundColor: '#333' }]}>
           <View style={styles.title}>
-            <Text style={styles.titleText}>Second</Text>
+            <Text style={styles.titleText}>Second menu...</Text>
           </View>
           <Menu name="menu2" onSelect={this.setFirstMenuDisabled}>
             <MenuTrigger style={styles.menuTrigger}>
@@ -95,9 +96,30 @@ const Example = React.createClass({
           </Menu>
         </View>
         <View style={styles.content}>
-          <Text style={styles.contentText} onPress={() => React.ToastAndroid.show('Hello!', React.ToastAndroid.SHORT)}>
+          <Text style={styles.contentText}>
             { this.state.message }
           </Text>
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.contentText}>
+            You can also make it a dropdown
+          </Text>
+          <Menu style={styles.dropdown} onSelect={(value) => this.setState({ dropdownSelection: value })}>
+            <MenuTrigger>
+              <Text>{this.state.dropdownSelection}</Text>
+            </MenuTrigger>
+            <MenuOptions style={styles.dropdownOptions}>
+              <MenuOption value="Option One">
+                <Text>Option One</Text>
+              </MenuOption>
+              <MenuOption value="Option Two">
+                <Text>Option Two</Text>
+              </MenuOption>
+              <MenuOption value="Option Three">
+                <Text>Option Three</Text>
+              </MenuOption>
+            </MenuOptions>
+          </Menu>
         </View>
       </MenuContext>
     );
@@ -138,10 +160,28 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginHorizontal: 2,
     borderBottomWidth: 1,
-    borderColor: '#eee'
+    borderColor: '#ccc'
   },
-  content: { flex: 1, alignItems: 'center', backgroundColor: 'white',justifyContent: 'center' },
-  contentText: { fontSize: 20 }
+  content: {
+    backgroundColor: 'white',
+    paddingHorizontal: 10,
+    paddingTop: 20,
+    paddingBottom: 30,
+    borderBottomWidth: 1,
+    borderColor: '#ccc'
+  },
+  contentText: {
+    fontSize: 18
+  },
+  dropdown: {
+    width: 200,
+    borderColor: '#999',
+    borderWidth: 1,
+    padding: 5
+  },
+  dropdownOptions: {
+    width: 200
+  }
 });
 
 module.exports = Example;

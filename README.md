@@ -16,7 +16,7 @@ $ npm install react-native-menu --save
 
 | iOS | Android |
 | --- | ------- |
-| ![](./demo.ios.2.gif) | ![](./demo.android.2.gif) |
+| ![](./ios.demo.gif) | ![](./android.demo.gif) |
 
 ## Basic Usage
 
