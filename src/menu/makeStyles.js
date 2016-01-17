@@ -31,6 +31,7 @@ module.exports = (React) => {
       flex: 1
     },
     backdrop: {
+      opacity: 0,
       position: 'absolute',
       top: window.height,
       bottom: -window.height,
