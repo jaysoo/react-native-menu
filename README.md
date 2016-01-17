@@ -126,3 +126,11 @@ Props:
 
 - `disabled` -- If true, then this option is not selectable
 - `style` -- Overrides default style properties (user-defined style will take priority)
+
+
+### Changelog
+
+#### 0.18.6
+
+- Dropdown menu now animates in (using scale animation) instead of just appearing.
+- Fixed opacity issue with backdrop for iOS
