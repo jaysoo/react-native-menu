@@ -99,7 +99,7 @@ module.exports = (React, { constants, model, styles }) => {
     },
     onMenuMeasure(name, x, y, w, h, px, py) {
       // Only override measurements if not already recorded.
-      if (!this._menuMeasurements) {
+      if (!this._menuMeasurements[name]) {
         this._menuMeasurements[name] = {x, y, w, h, px, py};
       }
     },
