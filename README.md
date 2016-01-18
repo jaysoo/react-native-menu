@@ -136,9 +136,15 @@ Props:
 - Fixed opacity issue with backdrop for iOS
 
 
-## Planned features
+## Roadmap
+
+### Features
 
 - Allow positioning of menu to be customized (currently only anchors to top-right of `Menu`).
 - Detect if the menu will be rendered off-screen, and adjust positioning accordingly.
+
+### Others
+
+- Add some integration tests using Appium.
 
 
