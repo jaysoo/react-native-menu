@@ -3,7 +3,7 @@ module.exports = (React) => {
   const TimerMixin = require('react-timer-mixin');
 
   // A component that scales in when mounted.
-  const ScaleAnimationView = React.createClass({
+  const AnimatedOptionsContainer = React.createClass({
     mixins: [TimerMixin],
     getInitialState() {
       return { scaleAnim: new Animated.Value(0.01) };
@@ -25,5 +25,5 @@ module.exports = (React) => {
     }
   });
 
-  return ScaleAnimationView;
+  return AnimatedOptionsContainer;
 };

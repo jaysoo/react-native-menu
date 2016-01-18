@@ -2,10 +2,11 @@
 
 const React = require('react-native');
 const {
+  ScrollView,
   StyleSheet,
   Text,
   View
-  } = React;
+} = React;
 
 import Menu, {
   MenuContext,
@@ -108,7 +109,8 @@ const Example = React.createClass({
             <MenuTrigger>
               <Text>{this.state.dropdownSelection}</Text>
             </MenuTrigger>
-            <MenuOptions style={styles.dropdownOptions}>
+            <MenuOptions optionsContainerStyle={styles.dropdownOptions}
+                         renderOptionsContainer={(options) => <ScrollView><Text>CHOOSE SOMETHING....</Text>{options}</ScrollView>}>
               <MenuOption value="Option One">
                 <Text>Option One</Text>
               </MenuOption>
@@ -117,6 +119,12 @@ const Example = React.createClass({
               </MenuOption>
               <MenuOption value="Option Three">
                 <Text>Option Three</Text>
+              </MenuOption>
+              <MenuOption value="Option Four">
+                <Text>Option Four</Text>
+              </MenuOption>
+              <MenuOption value="Option Five">
+                <Text>Option Five</Text>
               </MenuOption>
             </MenuOptions>
           </Menu>
@@ -174,13 +182,17 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   dropdown: {
-    width: 200,
+    width: 300,
     borderColor: '#999',
     borderWidth: 1,
     padding: 5
   },
   dropdownOptions: {
-    width: 200
+    marginTop: 30,
+    borderColor: '#ccc',
+    borderWidth: 2,
+    width: 300,
+    height: 200
   }
 });
 

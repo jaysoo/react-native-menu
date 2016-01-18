@@ -96,29 +96,13 @@ Props:
 
 Props:
 
-- `style` -- Overrides default style properties (user-defined style will take priority)
+- `optionsContainerStyle` -- Provides custom styling for options container
+- `renderOptionsContainer` -- A function that renders takes in the `MenuOptions` element and renders a container element
+  that contains the options. Default function wraps options with a `ScrollView`.
 
-**Note:** The default style for `MenuOptions` is as follows:
-
-```js
-{
-    position: 'absolute',
-    borderRadius: 2,
-    overflow: 'hidden',
-    backgroundColor: 'white',
-    width: 200,
-
-    // Shadow only works on iOS.
-    shadowColor: 'rgba(0, 0, 0, .8)',
-    shadowOffset: { width: 5, height: 5 },
-    shadowRadius: 3,
-
-    // This will elevate the view on Android, causing shadow to be drawn.
-    elevation: 5
-  }
-```
-
-If you want to change the `width`, for example, you will do `<MenuOptions style={{ width: 300 }}>`.
+For example, if you want to change the options width to `300`, you can use `<MenuOptions optionsContainerStyle={{ width: 300 }}>`.
+To further customize the rendered content you can do something like
+`<MenuOptions renderOptionsContainer={(options) => <SomeCustomContainer>{options}</SomeCustomContainer>}>`.
 
 ### MenuOption
 

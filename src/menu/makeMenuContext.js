@@ -2,9 +2,10 @@ module.exports = (React, { constants, model, styles }) => {
   const {
     NativeModules: { UIManager },
     TouchableWithoutFeedback,
+    ScrollView,
     View
   } = React;
-  const ScaleAnimationView = require('./makeScaleAnimationView')(React);
+  const AnimatedOptionsContainer = require('./makeAnimatedOptionsContainer')(React);
 
   // Calls a function once, then never again.
   const once = (fn) => {
@@ -17,11 +18,20 @@ module.exports = (React, { constants, model, styles }) => {
     };
   };
 
-  const makeOptions = (options, { top, right }) => (
-    <ScaleAnimationView style={[ styles.optionsContainer, { top, right }]}>
-      { options }
-    </ScaleAnimationView>
+  const defaultOptionsContainerRenderer = (options) => (
+    <ScrollView>
+      {options}
+    </ScrollView>
   );
+
+  const makeOptions = (options, { top, right }) => {
+    const { optionsContainerStyle, renderOptionsContainer = defaultOptionsContainerRenderer} = options.props;
+    return (
+      <AnimatedOptionsContainer style={[ styles.optionsContainer, optionsContainerStyle, { top, right }]}>
+        { renderOptionsContainer(options) }
+      </AnimatedOptionsContainer>
+    );
+  };
 
   /*
    * The MenuContext provides a tunnel for descendant menu components to access
