@@ -128,9 +128,17 @@ Props:
 - `style` -- Overrides default style properties (user-defined style will take priority)
 
 
-### Changelog
+## Changelog
 
-#### 0.18.6
+### 0.18.6
 
 - Dropdown menu now animates in (using scale animation) instead of just appearing.
 - Fixed opacity issue with backdrop for iOS
+
+
+## Planned features
+
+- Allow positioning of menu to be customized (currently only anchors to top-right of `Menu`).
+- Detect if the menu will be rendered off-screen, and adjust positioning accordingly.
+
+
