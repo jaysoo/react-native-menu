@@ -98,7 +98,10 @@ module.exports = (React, { constants, model, styles }) => {
       }
     },
     onMenuMeasure(name, x, y, w, h, px, py) {
-      this._menuMeasurements[name] = {x, y, w, h, px, py};
+      // Only override measurements if not already recorded.
+      if (!this._menuMeasurements) {
+        this._menuMeasurements[name] = {x, y, w, h, px, py};
+      }
     },
     onLayout() {
       const handle = React.findNodeHandle(this.refs.Container);
