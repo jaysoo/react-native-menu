@@ -81,7 +81,7 @@ module.exports = (React, { constants, model, styles }) => {
 
       this.setState({
         menuIsOpen: true,
-        menuOptions: this.makeAndPositionOptions(this._options[name]),
+        menuOptions: this.makeAndPositionOptions(name),
         backdropWidth: this._ownMeasurements.w
       });
     },
@@ -116,11 +116,12 @@ module.exports = (React, { constants, model, styles }) => {
       // If the menu is already open, re-render the options.
       this.setTimeout(() => {
         if (this.state.menuIsOpen) {
-          this.setState({ menuOptions: this.makeAndPositionOptions(options) });
+          this.setState({ menuOptions: this.makeAndPositionOptions(name) });
         }
       }, 16);
     },
-    makeAndPositionOptions(options) {
+    makeAndPositionOptions(name) {
+      const options = this._options[name];
       const { w: menuWidth, px: menuPX, py: menuPY } = this._menuMeasurements[name];
       const { w: ownWidth, px: ownPX, py: ownPY } = this._ownMeasurements;
       const optionsTop = menuPY - ownPY;
