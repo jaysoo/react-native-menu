@@ -42,8 +42,10 @@ const Example = React.createClass({
       message: `First menu is ${disabled ? 'disabled' : 'enabled'}`,
       firstMenuDisabled: disabled
     });
+    return false;
   },
   render() {
+    return<View/>
     return (
       <MenuContext style={{ flex: 1 }} ref="MenuContext">
         <View style={styles.topbar}>
