@@ -44,6 +44,7 @@ module.exports = (React, { constants, model, styles }) => {
     displayName: 'MenuContext',
     mixins: [TimerMixin],
     componentWillMount() {
+      this._menuHooks = {};
       this._menuMeasurements = {};
       this._options = {};
       // Only do this once on initial layout.
@@ -67,6 +68,8 @@ module.exports = (React, { constants, model, styles }) => {
         close: this.closeMenu,
         toggle: this.toggleMenu,
         onMenuMeasure: this.onMenuMeasure,
+        registerMenuHooks: this.registerMenuHooks,
+        unregisterMenu: this.unregisterMenu,
         registerOptionsElement: this.registerOptionsElement
       };
       return {menuController};
@@ -84,16 +87,22 @@ module.exports = (React, { constants, model, styles }) => {
         menuOptions: this.makeAndPositionOptions(name),
         backdropWidth: this._ownMeasurements.w
       });
+
+      this._activeMenuHooks = this._menuHooks[name];
+      this._activeMenuHooks.didOpen();
     },
     closeMenu() {
       this.setState({
         menuIsOpen: false,
         menuOptions: null
       });
+
+      this._activeMenuHooks.didClose();
+      this._activeMenuHooks = null;
     },
     toggleMenu(name = constants.DEFAULT_MENU_NAME) {
       if (this.state.menuIsOpen) {
-        this.closeMenu();
+        this.closeMenu(name);
       } else {
         this.openMenu(name);
       }
@@ -109,6 +118,13 @@ module.exports = (React, { constants, model, styles }) => {
       UIManager.measure(handle, (x, y, w, h, px, py) => {
         this._ownMeasurements = {x, y, w, h, px, py};
       });
+    },
+    registerMenuHooks(name, hooks) {
+      this._menuHooks[name] = hooks;
+    },
+    unregisterMenu(name) {
+      delete this._menuHooks[name];
+      delete this._options[name];
     },
     // registerOptionsElement :: ReactElement -> void
     registerOptionsElement(name = constants.DEFAULT_MENU_NAME, options) {

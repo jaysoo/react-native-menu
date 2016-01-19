@@ -1,3 +1,5 @@
+const TimerMixin = require('react-timer-mixin');
+
 module.exports = (React, { constants, model, styles }) => {
   const {
     NativeModules: { UIManager },
@@ -6,15 +8,19 @@ module.exports = (React, { constants, model, styles }) => {
 
   const Menu = React.createClass({
     displayName: 'Menu',
+    mixins: [TimerMixin],
     propTypes: {
       name: React.PropTypes.string,
-      onSelect: React.PropTypes.func
+      onSelect: React.PropTypes.func,
+      onOpen: React.PropTypes.func,
+      onClose: React.PropTypes.func
     },
     getDefaultProps() {
       return {
         name: constants.DEFAULT_MENU_NAME,
-        onSelect: () => {
-        }
+        onSelect: () => {},
+        onOpen: () => {},
+        onClose: () => {}
       };
     },
     contextTypes: {
@@ -25,6 +31,9 @@ module.exports = (React, { constants, model, styles }) => {
     },
     getChildContext() {
       return {getClosestMenuName: () => this.props.name};
+    },
+    componentWillUnmount() {
+      this.context.menuController.unregisterMenu(this.props.name);
     },
     onLayout() {
       const handle = React.findNodeHandle(this.refs.Menu);
@@ -38,6 +47,12 @@ module.exports = (React, { constants, model, styles }) => {
       if (shouldClose) {
         this.context.menuController.close();
       }
+    },
+    didOpen() {
+      this.props.onOpen();
+    },
+    didClose() {
+      this.props.onClose();
     },
     render() {
       const { children, name } = this.props;
@@ -65,6 +80,13 @@ module.exports = (React, { constants, model, styles }) => {
       }
 
       this.context.menuController.registerOptionsElement(name, options);
+
+      this.setTimeout(() => {
+        this.context.menuController.registerMenuHooks(name, {
+          didOpen: () => this.didOpen(),
+          didClose: () => this.didClose()
+        });
+      }, 16);
 
       return (
         <View style={this.props.style} ref="Menu" onLayout={this.onLayout}>

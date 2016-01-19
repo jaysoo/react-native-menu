@@ -113,6 +113,11 @@ Props:
 
 ## Changelog
 
+### 0.18.10
+
+- Adds callback for `Menu` component when menu opens and closes.
+- Allows menu options to re-render dynamically while menu is open.
+
 ### 0.18.9
 
 - Adds more customization options for options container.
