@@ -1,10 +1,9 @@
 'use strict';
 
+const { expect, sinon } = require('./../support/setup');
 const React = require('react');
-const expect = require('chai').expect;
 const TestUtils = require('react-addons-test-utils');
-const sinon = require('sinon');
-const makeMenuContext = require('../src/menu/makeMenuContext');
+const makeMenuContext = require('../../src/menu/makeMenuContext');
 
 describe('MenuContext', () => {
   let MenuContext, renderer, UIManager;
@@ -37,9 +36,9 @@ describe('MenuContext', () => {
     };
 
     const moduleConfig = {
-      constants: require('../src/menu/constants'),
-      model: require('../src/menu/makeModel')(ReactStub),
-      styles: require('../src/menu/makeStyles')(ReactStub)
+      constants: require('../../src/menu/constants'),
+      model: require('../../src/menu/makeModel')(ReactStub),
+      styles: require('../../src/menu/makeStyles')(ReactStub)
     };
 
     MenuContext = makeMenuContext(ReactStub, moduleConfig);

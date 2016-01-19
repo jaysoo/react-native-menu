@@ -47,12 +47,9 @@ const Example = React.createClass({
     return (
       <MenuContext style={{ flex: 1 }} ref="MenuContext">
         <View style={styles.topbar}>
-          <View style={styles.title}>
-            <Text style={styles.titleText}>First menu...</Text>
-          </View>
           <Menu name ="menu1" onSelect={this.setMessage}>
             <MenuTrigger disabled={this.state.firstMenuDisabled} style={styles.menuTrigger}>
-              <Text style={styles.menuTriggerText}>&#8942;</Text>
+              <Text style={styles.menuTriggerText}>OPEN FIRST MENU</Text>
             </MenuTrigger>
             <MenuOptions style={styles.menuOptions}>
               <MenuOption value="normal">
@@ -72,12 +69,9 @@ const Example = React.createClass({
           </Menu>
         </View>
         <View style={[styles.topbar, { backgroundColor: '#333' }]}>
-          <View style={styles.title}>
-            <Text style={styles.titleText}>Second menu...</Text>
-          </View>
           <Menu name="menu2" onSelect={this.setFirstMenuDisabled}>
             <MenuTrigger style={styles.menuTrigger}>
-              <Text style={styles.menuTriggerText}>&#8942;</Text>
+              <Text style={styles.menuTriggerText}>OPEN SECOND MENU</Text>
             </MenuTrigger>
             <MenuOptions>
               {
@@ -137,22 +131,12 @@ const Example = React.createClass({
 const styles = StyleSheet.create({
   topbar: {
     flexDirection: 'row',
+    justifyContent: 'flex-end',
     backgroundColor: 'black',
     paddingHorizontal: 5,
     paddingVertical: 10
   },
-  title: {
-    flex: 1,
-    alignSelf: 'flex-start',
-    paddingLeft: 5
-  },
-  titleText: {
-    color: '#ddd',
-    fontSize: 20
-  },
   menuTrigger: {
-    alignSelf: 'flex-end',
-    justifyContent: 'flex-end',
     flexDirection: 'row',
     paddingHorizontal: 10
   },

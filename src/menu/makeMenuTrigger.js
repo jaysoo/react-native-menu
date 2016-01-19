@@ -18,9 +18,10 @@ module.exports = (React, { model }) => {
       menuController.toggle(getClosestMenuName());
     },
     render() {
-      const Container = this.props.disabled ? View : TouchableWithoutFeedback;
+      const { disabled, ...rest } = this.props;
+      const Container = disabled ? View : TouchableWithoutFeedback;
       return (
-        <Container onPress={this.onPress}>
+        <Container onPress={this.onPress} {...rest}>
           <View style={this.props.style}>
             { this.props.children }
           </View>
