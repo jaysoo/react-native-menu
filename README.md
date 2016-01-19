@@ -111,13 +111,17 @@ Props:
 - `disabled` -- If true, then this option is not selectable
 - `style` -- Overrides default style properties (user-defined style will take priority)
 
-
 ## Changelog
+
+### 0.18.9
+
+- Adds more customization options for options container.
+- Fixes issue with wrong positioning calculation.
 
 ### 0.18.6
 
 - Dropdown menu now animates in (using scale animation) instead of just appearing.
-- Fixed opacity issue with backdrop for iOS
+- Fixes opacity issue with backdrop for iOS.
 
 
 ## Roadmap
@@ -127,8 +131,24 @@ Props:
 - Allow positioning of menu to be customized (currently only anchors to top-right of `Menu`).
 - Detect if the menu will be rendered off-screen, and adjust positioning accordingly.
 
-### Others
+## Testing
 
-- Add some integration tests using Appium.
+Install dev modules:
 
+```
+npm install
+```
 
+### Run unit tests
+
+```
+npm run test:unit
+```
+
+### Run integration tests
+
+Make sure you have a connected android device. You find list devices using `adb devices`.
+
+```
+npm run test:integration
+```
