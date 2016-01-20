@@ -118,6 +118,15 @@ Props:
 
 ## Changelog
 
+### 0.18.12
+
+- Fixes regression where multiple menus within a context did not work.
+
+### 0.18.11
+
+- Adds method to `MenuContext` to check if the menu is opened or not.
+- Supports re-rendering of `MenuOptions` while the menu is opened.
+
 ### 0.18.10
 
 - Adds callback for `Menu` component when menu opens and closes.
