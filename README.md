@@ -73,6 +73,7 @@ Please refer to the full working example [here](./Example/Example.js).
 
 Methods:
 
+- isMenuOpen() -- Returns `true` if menu is open
 - openMenu() -- Opens the menu
 - closeMenu() -- Closes the menu
 - toggleMenu() -- Toggle the menu between open and close
