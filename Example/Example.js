@@ -45,7 +45,6 @@ const Example = React.createClass({
     return false;
   },
   render() {
-    return<View/>
     return (
       <MenuContext style={{ flex: 1 }} ref="MenuContext">
         <View style={styles.topbar}>
