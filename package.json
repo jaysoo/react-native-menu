@@ -4,7 +4,7 @@
   "description": "A flexible dropdown menu component for Android and iOS that is similar to Android's Spinner.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jaysoo/react-native-parallax-scroll-view"
+    "url": "https://github.com/jaysoo/react-native-menu"
   },
   "scripts": {
     "build:android": "cd Example/android && ./gradlew assembleRelease",
