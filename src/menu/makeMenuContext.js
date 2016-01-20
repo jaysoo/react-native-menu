@@ -35,6 +35,11 @@ module.exports = (React, { constants, model, styles }) => {
     );
   };
 
+  const NULL_HOOKS = {
+    didOpen: () => {},
+    didClose: () => {}
+  }
+
   /*
    * The MenuContext provides a tunnel for descendant menu components to access
    * top-level methods. It also allows the <MenuOptions/> element to be placed
@@ -44,7 +49,7 @@ module.exports = (React, { constants, model, styles }) => {
     displayName: 'MenuContext',
     mixins: [TimerMixin],
     componentWillMount() {
-      this._menuHooks = {};
+      this._menuHooks = NULL_HOOKS;
       this._menuMeasurements = {};
       this._options = {};
       // Only do this once on initial layout.
@@ -52,7 +57,7 @@ module.exports = (React, { constants, model, styles }) => {
     },
     getInitialState() {
       return {
-        menuIsOpen: false,
+        openedMenu: '',
         menuOptions: null,
         optionsTop: 0,
         optionsRight: 0,
@@ -75,7 +80,7 @@ module.exports = (React, { constants, model, styles }) => {
       return {menuController};
     },
     isMenuOpen() {
-      return this.state.menuIsOpen
+      return this.state.openedMenu
     },
     openMenu(name = constants.DEFAULT_MENU_NAME) {
       if (!this._menuMeasurements[name]) {
@@ -83,7 +88,7 @@ module.exports = (React, { constants, model, styles }) => {
       }
 
       this.setState({
-        menuIsOpen: true,
+        openedMenu: name,
         menuOptions: this.makeAndPositionOptions(name),
         backdropWidth: this._ownMeasurements.w
       });
@@ -93,15 +98,15 @@ module.exports = (React, { constants, model, styles }) => {
     },
     closeMenu() {
       this.setState({
-        menuIsOpen: false,
+        openedMenu: '',
         menuOptions: null
       });
 
       this._activeMenuHooks.didClose();
-      this._activeMenuHooks = null;
+      this._activeMenuHooks = NULL_HOOKS;
     },
     toggleMenu(name = constants.DEFAULT_MENU_NAME) {
-      if (this.state.menuIsOpen) {
+      if (this.state.openedMenu === name) {
         this.closeMenu(name);
       } else {
         this.openMenu(name);
@@ -126,15 +131,18 @@ module.exports = (React, { constants, model, styles }) => {
       delete this._menuHooks[name];
       delete this._options[name];
     },
-    // registerOptionsElement :: ReactElement -> void
     registerOptionsElement(name = constants.DEFAULT_MENU_NAME, options) {
+      if (this._options[name] === options) {
+        return;
+      }
       this._options[name] = options;
       // If the menu is already open, re-render the options.
       this.setTimeout(() => {
-        if (this.state.menuIsOpen) {
+        if (this.state.openedMenu === name) {
           this.setState({ menuOptions: this.makeAndPositionOptions(name) });
         }
       }, 16);
+
     },
     makeAndPositionOptions(name) {
       const options = this._options[name];
@@ -152,7 +160,7 @@ module.exports = (React, { constants, model, styles }) => {
           </View>
           <TouchableWithoutFeedback onPress={this.closeMenu}>
             <View style={[ styles.backdrop
-                          , this.state.menuIsOpen ? { width: this.state.backdropWidth, top: 0, bottom: 0 }: null ]}/>
+                          , this.state.openedMenu ? { width: this.state.backdropWidth, top: 0, bottom: 0 }: null ]}/>
           </TouchableWithoutFeedback>
           { this.state.menuOptions }
         </View>
