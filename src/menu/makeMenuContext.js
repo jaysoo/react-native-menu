@@ -102,7 +102,7 @@ module.exports = (React, { constants, model, styles }) => {
         menuOptions: null
       });
 
-      this._activeMenuHooks.didClose();
+      this._activeMenuHooks && this._activeMenuHooks.didClose();
       this._activeMenuHooks = NULL_HOOKS;
     },
     toggleMenu(name = constants.DEFAULT_MENU_NAME) {
