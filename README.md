@@ -1,3 +1,5 @@
+![](https://img.shields.io/npm/dm/react-native-menu.svg?style=flat-square)
+
 # react-native-menu
 
 A menu component for Android and iOS that provides a dropdown similar to Android's
