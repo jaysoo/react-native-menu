@@ -1,4 +1,4 @@
-![](https://img.shields.io/npm/dm/react-native-menu.svg?style=flat-square)
+![https://www.npmjs.com/package/react-native-menu](https://img.shields.io/npm/dm/react-native-menu.svg?style=flat-square)
 
 # react-native-menu
 
