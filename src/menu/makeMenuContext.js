@@ -94,7 +94,7 @@ module.exports = (React, { constants, model, styles }) => {
       });
 
       this._activeMenuHooks = this._menuHooks[name];
-      this._activeMenuHooks.didOpen();
+      this._activeMenuHooks && this._activeMenuHooks.didOpen();
     },
     closeMenu() {
       this.setState({
