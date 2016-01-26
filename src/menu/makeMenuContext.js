@@ -48,53 +48,25 @@ module.exports = (React, { constants, model, styles }) => {
   const MenuContext = React.createClass({
     displayName: 'MenuContext',
     mixins: [TimerMixin],
-    componentWillMount() {
-      this._menuHooks = NULL_HOOKS;
-      this._menuMeasurements = {};
-      this._options = {};
-      // Only do this once on initial layout.
-      this.onLayout = once(this.onLayout);
-    },
-    getInitialState() {
-      return {
-        openedMenu: '',
-        menuOptions: null,
-        optionsTop: 0,
-        optionsRight: 0,
-        backdropWidth: 0
-      };
-    },
-    childContextTypes: {
-      menuController: model.IMenuController
-    },
-    getChildContext() {
-      const menuController = {
-        open: this.openMenu,
-        close: this.closeMenu,
-        toggle: this.toggleMenu,
-        onMenuMeasure: this.onMenuMeasure,
-        registerMenuHooks: this.registerMenuHooks,
-        unregisterMenu: this.unregisterMenu,
-        registerOptionsElement: this.registerOptionsElement
-      };
-      return {menuController};
-    },
+
+    // Public methods
     isMenuOpen() {
       return this.state.openedMenu
     },
     openMenu(name = constants.DEFAULT_MENU_NAME) {
-      if (!this._menuMeasurements[name]) {
-        throw new Error(`MenuContext cannot find a Menu with name ${name} to open.`);
-      }
+      const handle = React.findNodeHandle(this._menus[name].ref);
+      UIManager.measure(handle, (x, y, w, h, px, py) => {
+        this._menus[name].measurements = { x, y, w, h, px, py };
 
-      this.setState({
-        openedMenu: name,
-        menuOptions: this.makeAndPositionOptions(name),
-        backdropWidth: this._ownMeasurements.w
+        this.setState({
+          openedMenu: name,
+          menuOptions: this._makeAndPositionOptions(name, this._menus[name].measurements),
+          backdropWidth: this._ownMeasurements.w
+        });
+
+        this._activeMenuHooks = this._menus[name];
+        this._activeMenuHooks && this._activeMenuHooks.didOpen();
       });
-
-      this._activeMenuHooks = this._menuHooks[name];
-      this._activeMenuHooks && this._activeMenuHooks.didOpen();
     },
     closeMenu() {
       this.setState({
@@ -112,11 +84,36 @@ module.exports = (React, { constants, model, styles }) => {
         this.openMenu(name);
       }
     },
-    onMenuMeasure(name, x, y, w, h, px, py) {
-      // Only override measurements if not already recorded.
-      if (!this._menuMeasurements[name]) {
-        this._menuMeasurements[name] = {x, y, w, h, px, py};
-      }
+
+    // Private and lifecycle methods
+    getInitialState() {
+      return {
+        openedMenu: '',
+        menuOptions: null,
+        optionsTop: 0,
+        optionsRight: 0,
+        backdropWidth: 0
+      };
+    },
+    childContextTypes: {
+      menuController: model.IMenuController
+    },
+    getChildContext() {
+      const menuController = {
+        open: this.openMenu,
+        close: this.closeMenu,
+        toggle: this.toggleMenu,
+        registerMenu: this._registerMenu,
+        unregisterMenu: this._unregisterMenu,
+        registerOptionsElement: this._registerOptionsElement
+      };
+      return { menuController };
+    },
+    componentWillMount() {
+      this._menus = {};
+      this._options = {};
+      // Only do this once on initial layout.
+      this.onLayout = once(this.onLayout);
     },
     onLayout() {
       const handle = React.findNodeHandle(this.refs.Container);
@@ -124,14 +121,15 @@ module.exports = (React, { constants, model, styles }) => {
         this._ownMeasurements = {x, y, w, h, px, py};
       });
     },
-    registerMenuHooks(name, hooks) {
-      this._menuHooks[name] = hooks;
+    _registerMenu(name, hooks) {
+      this._menus[name] = hooks;
     },
-    unregisterMenu(name) {
-      delete this._menuHooks[name];
+    _unregisterMenu(name) {
+      delete this._menus[name];
       delete this._options[name];
     },
-    registerOptionsElement(name = constants.DEFAULT_MENU_NAME, options) {
+    _registerOptionsElement(name = constants.DEFAULT_MENU_NAME, options) {
+      // Options haven't changed, no need to re-register.
       if (this._options[name] === options) {
         return;
       }
@@ -139,19 +137,19 @@ module.exports = (React, { constants, model, styles }) => {
       // If the menu is already open, re-render the options.
       this.setTimeout(() => {
         if (this.state.openedMenu === name) {
-          this.setState({ menuOptions: this.makeAndPositionOptions(name) });
+          this.setState({ menuOptions: this._makeAndPositionOptions(name, this._menus[name].measurements) });
         }
       }, 16);
-
     },
-    makeAndPositionOptions(name) {
+    _makeAndPositionOptions(name, menuMeasurements) {
       const options = this._options[name];
-      const { w: menuWidth, px: menuPX, py: menuPY } = this._menuMeasurements[name];
+      const { w: menuWidth, px: menuPX, py: menuPY } = menuMeasurements;
       const { w: ownWidth, px: ownPX, py: ownPY } = this._ownMeasurements;
       const optionsTop = menuPY - ownPY;
       const optionsRight = ownWidth + ownPX - menuPX - menuWidth;
       return makeOptions(options, { top: optionsTop, right: optionsRight });
     },
+
     render() {
       return (
         <View ref="Container" onLayout={this.onLayout} style={{ flex: 1 }}>

@@ -118,6 +118,10 @@ Props:
 
 ## Changelog
 
+### 0.18.3
+
+- Lazily calculate menu position on open -- fixes stale calculation issues.
+
 ### 0.18.12
 
 - Fixes regression where multiple menus within a context did not work.

@@ -36,9 +36,10 @@ module.exports = (React, { constants, model, styles }) => {
       this.context.menuController.unregisterMenu(this.props.name);
     },
     onLayout() {
-      const handle = React.findNodeHandle(this.refs.Menu);
-      UIManager.measure(handle, (left, top, width, height, px, py) => {
-        this.context.menuController.onMenuMeasure(this.props.name, left, top, width, height, px, py);
+      this.context.menuController.registerMenu(this.props.name, {
+        ref: this.refs.Menu,
+        didOpen: () => this.didOpen(),
+        didClose: () => this.didClose()
       });
     },
     onSelect(value) {
@@ -80,13 +81,6 @@ module.exports = (React, { constants, model, styles }) => {
       }
 
       this.context.menuController.registerOptionsElement(name, options);
-
-      this.setTimeout(() => {
-        this.context.menuController.registerMenuHooks(name, {
-          didOpen: () => this.didOpen(),
-          didClose: () => this.didClose()
-        });
-      }, 16);
 
       return (
         <View style={this.props.style} ref="Menu" onLayout={this.onLayout}>
