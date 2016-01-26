@@ -14,18 +14,18 @@ module.exports = (React, { model }) => {
       getClosestMenuName: React.PropTypes.func.isRequired
     },
     onPress() {
-      const { menuController, getClosestMenuName } = this.context;
-      menuController.toggle(getClosestMenuName());
+      if (!this.props.disabled) {
+        const { menuController, getClosestMenuName } = this.context;
+        menuController.toggle(getClosestMenuName());
+      }
     },
     render() {
-      const { disabled, ...rest } = this.props;
-      const Container = disabled ? View : TouchableWithoutFeedback;
       return (
-        <Container onPress={this.onPress} {...rest}>
+        <TouchableWithoutFeedback onPress={this.onPress} {...this.props}>
           <View style={this.props.style}>
             { this.props.children }
           </View>
-        </Container>
+        </TouchableWithoutFeedback>
       );
     }
   });
