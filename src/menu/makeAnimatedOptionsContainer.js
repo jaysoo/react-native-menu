@@ -6,7 +6,7 @@ module.exports = (React) => {
   const AnimatedOptionsContainer = React.createClass({
     mixins: [TimerMixin],
     getInitialState() {
-      return { scaleAnim: new Animated.Value(0.01) };
+      return { scaleAnim: new Animated.Value(0.001) };
     },
     componentDidMount() {
       this.setTimeout(() => {
