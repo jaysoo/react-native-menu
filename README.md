@@ -118,7 +118,7 @@ Props:
 
 ## Changelog
 
-### 0.18.3
+### 0.18.14
 
 - Lazily calculate menu position on open -- fixes stale calculation issues.
 
