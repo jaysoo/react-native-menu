@@ -7,11 +7,13 @@
     "url": "https://github.com/jaysoo/react-native-menu"
   },
   "scripts": {
+    "install:example": "cd Example && npm install",
     "build:android": "cd Example/android && ./gradlew assembleRelease",
     "start:appium": "./node_modules/.bin/appium",
+    "test:setup": "npm run install:example && npm run build:android",
     "test:unit": "./node_modules/.bin/mocha --require babel-core/register test/unit",
     "test:integration": "./node_modules/.bin/mocha --require babel-core/register test/integration",
-    "test": "npm run test:unit test:integration"
+    "test": "npm run test:setup && npm run test:unit && npm run test:integration"
   },
   "main": "src/index.js",
   "files": [

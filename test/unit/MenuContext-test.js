@@ -47,6 +47,6 @@ describe('MenuContext', () => {
   it('renders', () => {
     renderer.render(<MenuContext/>);
     const menuContext = renderer.getRenderOutput();
-    expect(menuContext).to.be.ok;
+    menuContext.should.be.ok;
   });
 });
