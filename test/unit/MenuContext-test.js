@@ -36,7 +36,6 @@ describe('MenuContext', () => {
     };
 
     const moduleConfig = {
-      constants: require('../../src/menu/constants'),
       model: require('../../src/menu/makeModel')(ReactStub),
       styles: require('../../src/menu/makeStyles')(ReactStub)
     };
