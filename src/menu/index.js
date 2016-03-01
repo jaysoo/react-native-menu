@@ -1,9 +1,8 @@
 const menuModuleFactory = (React) => {
-  const constants = require('./constants');
   const model = require('./makeModel')(React);
   const styles = require('./makeStyles')(React);
 
-  const config = { constants, model, styles };
+  const config = { model, styles };
 
   return {
     Menu: require('./makeMenu')(React, config),

@@ -116,7 +116,12 @@ Props:
 - `disabled` -- If true, then this option is not selectable
 - `style` -- Overrides default style properties (user-defined style will take priority)
 
-## Changelog
+## Latest Changes
+
+### 0.18.15
+
+- Fixes issue where multiple unnamed `Menu` components under one `MenuContext
+  causes bad positioning.
 
 ### 0.18.14
 
@@ -125,27 +130,6 @@ Props:
 ### 0.18.12
 
 - Fixes regression where multiple menus within a context did not work.
-
-### 0.18.11
-
-- Adds method to `MenuContext` to check if the menu is opened or not.
-- Supports re-rendering of `MenuOptions` while the menu is opened.
-
-### 0.18.10
-
-- Adds callback for `Menu` component when menu opens and closes.
-- Allows menu options to re-render dynamically while menu is open.
-
-### 0.18.9
-
-- Adds more customization options for options container.
-- Fixes issue with wrong positioning calculation.
-
-### 0.18.6
-
-- Dropdown menu now animates in (using scale animation) instead of just appearing.
-- Fixes opacity issue with backdrop for iOS.
-
 
 ## Roadmap
 
@@ -175,3 +159,8 @@ Make sure you have a connected android device. You find list devices using `adb 
 ```
 npm run test:integration
 ```
+
+## Contributing
+
+Contributions are welcome! Just open an issues with any ideas or pull-requests.
+I will take a look when I have time. :)

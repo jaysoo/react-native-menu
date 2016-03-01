@@ -1,5 +1,7 @@
 const TimerMixin = require('react-timer-mixin');
 
+let nextID = 1;
+
 module.exports = (React, { constants, model, styles }) => {
   const {
     NativeModules: { UIManager },
@@ -53,7 +55,7 @@ module.exports = (React, { constants, model, styles }) => {
     isMenuOpen() {
       return this.state.openedMenu
     },
-    openMenu(name = constants.DEFAULT_MENU_NAME) {
+    openMenu(name) {
       const handle = React.findNodeHandle(this._menus[name].ref);
       UIManager.measure(handle, (x, y, w, h, px, py) => {
         this._menus[name].measurements = { x, y, w, h, px, py };
@@ -77,7 +79,7 @@ module.exports = (React, { constants, model, styles }) => {
       this._activeMenuHooks && this._activeMenuHooks.didClose();
       this._activeMenuHooks = NULL_HOOKS;
     },
-    toggleMenu(name = constants.DEFAULT_MENU_NAME) {
+    toggleMenu(name) {
       if (this.state.openedMenu === name) {
         this.closeMenu(name);
       } else {
@@ -105,7 +107,8 @@ module.exports = (React, { constants, model, styles }) => {
         toggle: this.toggleMenu,
         registerMenu: this._registerMenu,
         unregisterMenu: this._unregisterMenu,
-        registerOptionsElement: this._registerOptionsElement
+        registerOptionsElement: this._registerOptionsElement,
+        makeName: this._makeName
       };
       return { menuController };
     },
@@ -122,13 +125,16 @@ module.exports = (React, { constants, model, styles }) => {
       });
     },
     _registerMenu(name, hooks) {
+      if (this._menus[name]) {
+        console.warn(`Menu ${name} has already been registered in this context. Please provide a different name.`);
+      }
       this._menus[name] = hooks;
     },
     _unregisterMenu(name) {
       delete this._menus[name];
       delete this._options[name];
     },
-    _registerOptionsElement(name = constants.DEFAULT_MENU_NAME, options) {
+    _registerOptionsElement(name, options) {
       // Options haven't changed, no need to re-register.
       if (this._options[name] === options) {
         return;
@@ -140,6 +146,9 @@ module.exports = (React, { constants, model, styles }) => {
           this.setState({ menuOptions: this._makeAndPositionOptions(name, this._menus[name].measurements) });
         }
       }, 16);
+    },
+    _makeName() {
+      return `menu-${nextID++}`;
     },
     _makeAndPositionOptions(name, menuMeasurements) {
       const options = this._options[name];

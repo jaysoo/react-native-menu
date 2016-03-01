@@ -48,7 +48,7 @@ const Example = React.createClass({
     return (
       <MenuContext style={{ flex: 1 }} ref="MenuContext">
         <View style={styles.topbar}>
-          <Menu name ="menu1" onSelect={this.setMessage}>
+          <Menu onSelect={this.setMessage}>
             <MenuTrigger disabled={this.state.firstMenuDisabled} style={styles.menuTrigger}>
               <Text style={styles.menuTriggerText}>OPEN FIRST MENU</Text>
             </MenuTrigger>
@@ -70,7 +70,7 @@ const Example = React.createClass({
           </Menu>
         </View>
         <View style={[styles.topbar, { backgroundColor: '#333' }]}>
-          <Menu name="menu2" onSelect={this.setFirstMenuDisabled}>
+          <Menu onSelect={this.setFirstMenuDisabled}>
             <MenuTrigger style={styles.menuTrigger}>
               <Text style={styles.menuTriggerText}>OPEN SECOND MENU</Text>
             </MenuTrigger>

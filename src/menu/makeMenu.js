@@ -8,7 +8,6 @@ module.exports = (React, { constants, model, styles }) => {
 
   const Menu = React.createClass({
     displayName: 'Menu',
-    mixins: [TimerMixin],
     propTypes: {
       name: React.PropTypes.string,
       onSelect: React.PropTypes.func,
@@ -17,7 +16,6 @@ module.exports = (React, { constants, model, styles }) => {
     },
     getDefaultProps() {
       return {
-        name: constants.DEFAULT_MENU_NAME,
         onSelect: () => {},
         onOpen: () => {},
         onClose: () => {}
@@ -30,13 +28,16 @@ module.exports = (React, { constants, model, styles }) => {
       getClosestMenuName: React.PropTypes.func
     },
     getChildContext() {
-      return {getClosestMenuName: () => this.props.name};
+      return { getClosestMenuName: () => this._name };
+    },
+    componentWillMount() {
+      this._name = this.props.name || this.context.menuController.makeName();
     },
     componentWillUnmount() {
-      this.context.menuController.unregisterMenu(this.props.name);
+      this.context.menuController.unregisterMenu(this._name);
     },
     onLayout() {
-      this.context.menuController.registerMenu(this.props.name, {
+      this.context.menuController.registerMenu(this._name, {
         ref: this.refs.Menu,
         didOpen: () => this.didOpen(),
         didClose: () => this.didClose()
@@ -56,7 +57,7 @@ module.exports = (React, { constants, model, styles }) => {
       this.props.onClose();
     },
     render() {
-      const { children, name } = this.props;
+      const { children } = this.props;
 
       if (!Array.isArray(children)) {
         throw new Error('Menu component is missing required children components MenuTrigger and MenuOptions.')
@@ -80,7 +81,7 @@ module.exports = (React, { constants, model, styles }) => {
         throw new Error('Menu component is missing required child component MenuOptions.')
       }
 
-      this.context.menuController.registerOptionsElement(name, options);
+      this.context.menuController.registerOptionsElement(this._name, options);
 
       return (
         <View style={this.props.style} ref="Menu" onLayout={this.onLayout}>
