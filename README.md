@@ -86,6 +86,10 @@ Props:
 
 ### Menu
 
+Methods:
+
+- getName() -- Returns the menu name (e.g. useful to get auto generated name)
+
 Props:
 
 - `onSelect` -- This function is called with the value the `MenuOption` that has been selected by the user
