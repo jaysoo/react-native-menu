@@ -36,6 +36,9 @@ module.exports = (React, { constants, model, styles }) => {
     componentWillUnmount() {
       this.context.menuController.unregisterMenu(this._name);
     },
+    getName() {
+      return this._name;
+    },
     onLayout() {
       this.context.menuController.registerMenu(this._name, {
         ref: this.refs.Menu,
