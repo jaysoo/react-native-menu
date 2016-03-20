@@ -135,8 +135,8 @@ module.exports = (React, { constants, model, styles }) => {
       delete this._options[name];
     },
     _registerOptionsElement(name, options) {
-      // Options haven't changed, no need to re-register.
-      if (this._options[name] === options) {
+      // If options are already set and visible, skip the update.
+      if (this.state.menuOptions === options) {
         return;
       }
       this._options[name] = options;
