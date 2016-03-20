@@ -122,6 +122,11 @@ Props:
 
 ## Latest Changes
 
+### 0.19.0
+
+- Fixes a performance issue where registering menu options on already
+  rendered and opened menu causes infinite render loop (Closes #5, #9).
+
 ### 0.18.15
 
 - Fixes issue where multiple unnamed `Menu` components under one `MenuContext
@@ -130,10 +135,6 @@ Props:
 ### 0.18.14
 
 - Lazily calculate menu position on open -- fixes stale calculation issues.
-
-### 0.18.12
-
-- Fixes regression where multiple menus within a context did not work.
 
 ## Roadmap
 

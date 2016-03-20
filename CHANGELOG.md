@@ -1,3 +1,7 @@
+### 0.19.0
+
+- Fixes a performance issue where registering menu options on already
+  rendered and opened menu causes infinite render loop (Closes #5, #9).
 
 ### 0.18.11
 
