@@ -12,7 +12,8 @@
     "start:appium": "./node_modules/.bin/appium",
     "test:setup": "npm run install:example && npm run build:android",
     "test:unit": "./node_modules/.bin/mocha --require babel-core/register test/unit",
-    "test:integration": "./node_modules/.bin/mocha --require babel-core/register test/integration",
+    "test:feature": "./node_modules/.bin/concurrently 'npm run start:appium' 'npm run test:feature:suite'",
+    "test:feature:suite": "./node_modules/.bin/mocha --require babel-core/register test/integration",
     "test": "npm run test:setup && npm run test:unit && npm run test:integration"
   },
   "main": "src/index.js",
@@ -44,6 +45,7 @@
     "chai": "^3.4.1",
     "chai-as-promised": "^5.2.0",
     "colors": "^1.1.2",
+    "concurrently": "^2.0.0",
     "mocha": "^2.3.4",
     "react": "^0.14.6",
     "react-addons-test-utils": "^0.14.6",
