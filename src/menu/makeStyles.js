@@ -16,7 +16,7 @@ module.exports = (React) => {
       shadowRadius: 4,
 
       // This will elevate the view on Android, causing shadow to be drawn.
-      elevation: 5
+      elevation: 8
     },
     options: {
       flex: 1
