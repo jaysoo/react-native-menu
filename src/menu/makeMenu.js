@@ -86,8 +86,9 @@ module.exports = (React, { constants, model, styles }) => {
 
       this.context.menuController.registerOptionsElement(this._name, options);
 
+      // view can't collapse see https://github.com/facebook/react-native/issues/3282
       return (
-        <View style={this.props.style} ref={this._register} onLayout={this.onLayout}>
+        <View style={this.props.style} ref={this._register} collapsable={false}>
           { rest }
         </View>
       );
