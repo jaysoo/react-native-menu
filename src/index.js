@@ -1,4 +1,4 @@
-const React = require('react-native');
+const React = require('react');
 
 // Make our components from factory functions.
 const {
