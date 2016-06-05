@@ -1,4 +1,5 @@
-const React = require('react-native');
+const ReactNative = require('react-native');
+const React = require('react');
 
 // Make our components from factory functions.
 const {
@@ -7,7 +8,7 @@ const {
   MenuOptions,
   MenuOption,
   MenuTrigger
-} = require('./menu')(React);
+} = require('./menu')(React, ReactNative);
 
 Menu.MenuContext = MenuContext;
 Menu.MenuOption = MenuOption;

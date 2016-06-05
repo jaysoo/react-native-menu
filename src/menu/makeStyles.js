@@ -1,5 +1,5 @@
-module.exports = (React) => {
-  const { Dimensions, StyleSheet } = React;
+module.exports = (ReactNative) => {
+  const { Dimensions, StyleSheet } = ReactNative;
   const window = Dimensions.get('window');
 
   return StyleSheet.create({

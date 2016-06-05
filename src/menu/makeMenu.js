@@ -1,10 +1,10 @@
 const TimerMixin = require('react-timer-mixin');
 
-module.exports = (React, { constants, model, styles }) => {
+module.exports = (React, ReactNative, { constants, model, styles }) => {
   const {
     NativeModules: { UIManager },
     View
-  } = React;
+  } = ReactNative;
 
   const Menu = React.createClass({
     displayName: 'Menu',

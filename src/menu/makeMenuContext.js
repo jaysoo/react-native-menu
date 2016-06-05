@@ -2,14 +2,14 @@ const TimerMixin = require('react-timer-mixin');
 
 let nextID = 1;
 
-module.exports = (React, { constants, model, styles }) => {
+module.exports = (React, ReactNative, { constants, model, styles }) => {
   const {
     NativeModules: { UIManager },
     TouchableWithoutFeedback,
     ScrollView,
     View
-  } = React;
-  const AnimatedOptionsContainer = require('./makeAnimatedOptionsContainer')(React);
+  } = ReactNative;
+  const AnimatedOptionsContainer = require('./makeAnimatedOptionsContainer')(React, ReactNative);
 
   // Calls a function once, then never again.
   const once = (fn) => {
