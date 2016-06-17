@@ -124,7 +124,7 @@ Props:
 
 ### 0.20.0
 
-- Fixes compatibility with React Native 0.26.0 (thanks @Froelund)
+- Fixes compatibility with React Native 0.27.2 (thanks @Froelund)
 
 ### 0.19.0
 
