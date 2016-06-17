@@ -122,9 +122,13 @@ Props:
 
 ## Latest Changes
 
+### 0.20.1
+
+- Changed menu elevation as per [material design spec](https://material.google.com/what-is-material/elevation-shadows.html) (thanks [@heydabop](https://github.com/heydabop)!)
+
 ### 0.20.0
 
-- Fixes compatibility with React Native 0.27.2 (thanks @Froelund)
+- Fixes compatibility with React Native 0.27.2 (thanks [@Froelund](https://github.com/Froelund))
 
 ### 0.19.0
 
