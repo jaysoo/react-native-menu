@@ -47,7 +47,7 @@
     "colors": "^1.1.2",
     "concurrently": "^2.0.0",
     "mocha": "^2.3.4",
-    "react": "^0.14.6",
+    "react": "^15.0.2",
     "react-addons-test-utils": "^0.14.6",
     "sinon": "^1.17.2",
     "wd": "^0.4.0"

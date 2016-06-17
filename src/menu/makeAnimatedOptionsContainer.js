@@ -1,5 +1,5 @@
-module.exports = (React) => {
-  const { Animated } = React;
+module.exports = (React, ReactNative) => {
+  const { Animated } = ReactNative;
   const TimerMixin = require('react-timer-mixin');
 
   // A component that scales in when mounted.

@@ -2,14 +2,14 @@ const TimerMixin = require('react-timer-mixin');
 
 let nextID = 1;
 
-module.exports = (React, { constants, model, styles }) => {
+module.exports = (React, ReactNative, { constants, model, styles }) => {
   const {
     NativeModules: { UIManager },
     TouchableWithoutFeedback,
     ScrollView,
     View
-  } = React;
-  const AnimatedOptionsContainer = require('./makeAnimatedOptionsContainer')(React);
+  } = ReactNative;
+  const AnimatedOptionsContainer = require('./makeAnimatedOptionsContainer')(React, ReactNative);
 
   // Calls a function once, then never again.
   const once = (fn) => {
@@ -56,7 +56,7 @@ module.exports = (React, { constants, model, styles }) => {
       return this.state.openedMenu
     },
     openMenu(name) {
-      const handle = React.findNodeHandle(this._menus[name].ref);
+      const handle = ReactNative.findNodeHandle(this._menus[name].ref);
       UIManager.measure(handle, (x, y, w, h, px, py) => {
         this._menus[name].measurements = { x, y, w, h, px, py };
 
@@ -119,7 +119,7 @@ module.exports = (React, { constants, model, styles }) => {
       this.onLayout = once(this.onLayout);
     },
     onLayout() {
-      const handle = React.findNodeHandle(this.refs.Container);
+      const handle = ReactNative.findNodeHandle(this.refs.Container);
       UIManager.measure(handle, (x, y, w, h, px, py) => {
         this._ownMeasurements = {x, y, w, h, px, py};
       });

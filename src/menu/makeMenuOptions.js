@@ -1,5 +1,5 @@
-module.exports = (React, { styles }) => {
-  const { TouchableWithoutFeedback, View } = React;
+module.exports = (React, ReactNative, { styles }) => {
+  const { TouchableWithoutFeedback, View } = ReactNative;
 
   const MenuOptions = React.createClass({
     displayName: 'MenuOptions',
