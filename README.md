@@ -122,6 +122,10 @@ Props:
 
 ## Latest Changes
 
+### 0.20.0
+
+- Fixes compatibility with React Native 0.26.0 (thanks @Froelund)
+
 ### 0.19.0
 
 - Fixes a performance issue where registering menu options on already
