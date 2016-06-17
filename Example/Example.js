@@ -1,12 +1,13 @@
 'use strict';
 
-const React = require('react-native');
+const React = require('react');
+const ReactNative = require('react-native');
 const {
   ScrollView,
   StyleSheet,
   Text,
   View
-} = React;
+} = ReactNative;
 
 import Menu, {
   MenuContext,
