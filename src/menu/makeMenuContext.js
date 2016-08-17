@@ -120,9 +120,12 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
     },
     onLayout() {
       const handle = ReactNative.findNodeHandle(this.refs.Container);
-      UIManager.measure(handle, (x, y, w, h, px, py) => {
-        this._ownMeasurements = {x, y, w, h, px, py};
-      });
+      const waitFor = this.props.lazyRender || 0
+      setTimeout(()=>{
+        UIManager.measure(handle, (x, y, w, h, px, py) => {
+          this._ownMeasurements = {x, y, w, h, px, py};
+        });
+      }, waitFor)
     },
     _registerMenu(name, hooks) {
       if (this._menus[name]) {
