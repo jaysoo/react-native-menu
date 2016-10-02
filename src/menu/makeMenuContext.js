@@ -30,11 +30,20 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
 
   const makeOptions = (options, { top, right }) => {
     const { optionsContainerStyle, renderOptionsContainer = defaultOptionsContainerRenderer} = options.props;
-    return (
-      <AnimatedOptionsContainer style={[ styles.optionsContainer, optionsContainerStyle, { top, right }]}>
-        { renderOptionsContainer(options) }
-      </AnimatedOptionsContainer>
-    );
+    if(options.animate) {
+      return (
+        <AnimatedOptionsContainer style={[ styles.optionsContainer, optionsContainerStyle, { top, right }]}>
+          { renderOptionsContainer(options) }
+        </AnimatedOptionsContainer>
+      );
+    }
+    else {
+      return (
+        <View style={[ styles.optionsContainer, optionsContainerStyle, { top, right }]}>
+          { renderOptionsContainer(options) }
+        </View>
+      );
+    }
   };
 
   const NULL_HOOKS = {
@@ -156,6 +165,7 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
       const { w: ownWidth, px: ownPX, py: ownPY } = this._ownMeasurements;
       const optionsTop = menuPY - ownPY;
       const optionsRight = ownWidth + ownPX - menuPX - menuWidth;
+      options['animate'] = 'animate' in this.props ? this.props.animate : true;
       return makeOptions(options, { top: optionsTop, right: optionsRight });
     },
 
