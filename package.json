@@ -1,6 +1,6 @@
 {
   "name": "react-native-menu",
-  "version": "0.20.1",
+  "version": "0.20.2",
   "description": "A flexible dropdown menu component for Android and iOS that is similar to Android's Spinner.",
   "repository": {
     "type": "git",
