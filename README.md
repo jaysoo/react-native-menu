@@ -170,7 +170,7 @@ npm run test:unit
 Make sure you have a connected android device. You find list devices using `adb devices`.
 
 ```
-npm run test:integration
+npm run test:feature:suite
 ```
 
 ## Contributing
