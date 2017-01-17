@@ -82,7 +82,7 @@ Methods:
 
 Props:
 
-*None*
+- 'detectBackAndroid' -- If true, menu context detects an Android hardware back press, closes menu and stops it from propagating and potentially causing bugs. (Default: true)
 
 ### Menu
 
