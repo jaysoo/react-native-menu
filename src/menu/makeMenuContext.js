@@ -51,7 +51,7 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
   const MenuContext = React.createClass({
     displayName: 'MenuContext',
     propTypes: {
-      detectBackAndroid: React.PropTypes.boolean,
+      detectBackAndroid: React.PropTypes.bool,
     },
     getDefaultProps() {
       return {
@@ -146,8 +146,8 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
       }
 
       if (this.props.detectBackAndroid){
-        BackAndroid.removeEventListener('hardwareBackPress', this.handleBackAndroid.bind(this));  //Override previous listener
-        BackAndroid.addEventListener('hardwareBackPress', this.handleBackAndroid.bind(this));
+        BackAndroid.removeEventListener('hardwareBackPress', this.handleBackAndroid);  //Override previous listener
+        BackAndroid.addEventListener('hardwareBackPress', this.handleBackAndroid);
       }
       this._menus[name] = hooks;
     },
