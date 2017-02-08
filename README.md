@@ -82,7 +82,8 @@ Methods:
 
 Props:
 
-*None*
+- `style` -- Overrides default style properties (user-defined style will take priority)
+- `onCloseMenu` -- Handler that will be called with the state of `MenuContext`, if defined.
 
 ### Menu
 
