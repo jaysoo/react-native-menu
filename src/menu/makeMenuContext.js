@@ -4,7 +4,7 @@ let nextID = 1;
 
 module.exports = (React, ReactNative, { constants, model, styles }) => {
   const {
-    NativeModules: { UIManager },
+    UIManager,
     TouchableWithoutFeedback,
     ScrollView,
     View
