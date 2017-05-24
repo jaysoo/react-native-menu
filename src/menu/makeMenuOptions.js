@@ -1,3 +1,5 @@
+const isClonable = (element) => !!element;
+
 module.exports = (React, ReactNative, { styles }) => {
   const { TouchableWithoutFeedback, View } = ReactNative;
 
@@ -10,9 +12,13 @@ module.exports = (React, ReactNative, { styles }) => {
       return (
         <TouchableWithoutFeedback style={[styles.options, this.props.style]}>
           <View>
-            { React.Children.map(this.props.children, (x) => (
-              React.cloneElement(x, {onPress: this.onSelect})
-            )) }
+            { React.Children.map(this.props.children, (x) => {
+              // If the children is a falsy value (for IIFE in the render method for example)
+              // It should just ignore it instead of throwing an exception.
+              return isClonable(x)
+                ? React.cloneElement(x, {onPress: this.onSelect})
+                : false;
+            })}
           </View>
         </TouchableWithoutFeedback>
       );
