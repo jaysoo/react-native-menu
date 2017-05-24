@@ -4,7 +4,7 @@ let nextID = 1;
 
 module.exports = (React, ReactNative, { constants, model, styles }) => {
   const {
-    NativeModules: { UIManager },
+    UIManager,
     TouchableWithoutFeedback,
     ScrollView,
     View,
@@ -80,6 +80,9 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
       });
     },
     closeMenu() {
+      if (this.props.onCloseMenu) {
+        this.props.onCloseMenu(this.state)
+      }
       this.setState({
         openedMenu: '',
         menuOptions: null
