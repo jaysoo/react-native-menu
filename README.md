@@ -69,6 +69,37 @@ The `MenuOption` component can take *any* children.
 
 Please refer to the full working example [here](./Example/Example.js).
 
+### Adding feedback to `MenuTrigger` and `MenuOption` components
+By default, the `MenuTrigger` and `MenuOption` components render with a
+`TouchableWithoutFeedback` component, however this may make the menu feel
+unnatural in your app.
+
+To override this, both components will take a `renderTouchable` property, which
+should be a function which returns an alternate component to use. For example:
+
+```js
+import { TouchableOpacity, Text } from 'react-native';
+import Menu, { MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
+
+const renderTouchable = () => <TouchableOpacity/>;
+
+const menu = () => (
+  <Menu>
+    <MenuTrigger renderTouchable={renderTouchable}>
+      <Text>Trigger</Text>
+    </MenuTrigger>
+    <MenuOptions>
+      <MenuOption value={1} renderTouchable={renderTouchable}>
+        <Text>One</Text>
+      </MenuOption>
+      <MenuOption value={2} renderTouchable={renderTouchable}>
+        <Text>Two</Text>
+      </MenuOption>
+    </MenuOptions>
+  </Menu>
+);
+```
+
 ## API
 
 ### MenuContext
@@ -101,6 +132,9 @@ Props:
 
 - `disabled` -- If true, then this trigger is not pressable
 - `style` -- Overrides default style properties (user-defined style will take priority)
+- `renderTouchable` -- A function which can override the default
+  `TouchableWithoutFeedback` component by returning a different component. [See
+  an example here](#adding-feedback-to-menutrigger-and-menuoption-components).
 
 ### MenuOptions
 
@@ -120,6 +154,9 @@ Props:
 
 - `disabled` -- If true, then this option is not selectable
 - `style` -- Overrides default style properties (user-defined style will take priority)
+- `renderTouchable` -- A function which can override the default
+  `TouchableWithoutFeedback` component by returning a different component. [See
+  an example here](#adding-feedback-to-menutrigger-and-menuoption-components).
 
 ## Latest Changes
 
