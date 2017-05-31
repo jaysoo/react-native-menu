@@ -4,10 +4,11 @@ let nextID = 1;
 
 module.exports = (React, ReactNative, { constants, model, styles }) => {
   const {
-    NativeModules: { UIManager },
+    UIManager,
     TouchableWithoutFeedback,
     ScrollView,
-    View
+    View,
+    BackAndroid
   } = ReactNative;
   const AnimatedOptionsContainer = require('./makeAnimatedOptionsContainer')(React, ReactNative);
 
@@ -49,6 +50,14 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
    */
   const MenuContext = React.createClass({
     displayName: 'MenuContext',
+    propTypes: {
+      detectBackAndroid: React.PropTypes.bool,
+    },
+    getDefaultProps() {
+      return {
+        detectBackAndroid: true,
+      };
+    },
     mixins: [TimerMixin],
 
     // Public methods
@@ -71,6 +80,9 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
       });
     },
     closeMenu() {
+      if (this.props.onCloseMenu) {
+        this.props.onCloseMenu(this.state)
+      }
       this.setState({
         openedMenu: '',
         menuOptions: null
@@ -118,6 +130,13 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
       // Only do this once on initial layout.
       this.onLayout = once(this.onLayout);
     },
+    handleBackAndroid() {
+      if (this.isMenuOpen()){
+        this.closeMenu();
+        return true;
+      }
+      return false;
+    },
     onLayout() {
       const handle = ReactNative.findNodeHandle(this.refs.Container);
       const waitFor = this.props.lazyRender || 0
@@ -130,6 +149,11 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
     _registerMenu(name, hooks) {
       if (this._menus[name]) {
         console.warn(`Menu ${name} has already been registered in this context. Please provide a different name.`);
+      }
+
+      if (this.props.detectBackAndroid){
+        BackAndroid.removeEventListener('hardwareBackPress', this.handleBackAndroid);  //Override previous listener
+        BackAndroid.addEventListener('hardwareBackPress', this.handleBackAndroid);
       }
       this._menus[name] = hooks;
     },

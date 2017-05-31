@@ -39,9 +39,9 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
     getName() {
       return this._name;
     },
-    onLayout() {
+    _register(ref) {
       this.context.menuController.registerMenu(this._name, {
-        ref: this.refs.Menu,
+        ref,
         didOpen: () => this.didOpen(),
         didClose: () => this.didClose()
       });
@@ -62,7 +62,7 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
     render() {
       const { children } = this.props;
 
-      if (!Array.isArray(children)) {
+      if (React.Children.count(children) < 2) {
         throw new Error('Menu component is missing required children components MenuTrigger and MenuOptions.')
       }
 
@@ -86,8 +86,9 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
 
       this.context.menuController.registerOptionsElement(this._name, options);
 
+      // view can't collapse see https://github.com/facebook/react-native/issues/3282
       return (
-        <View style={this.props.style} ref="Menu" onLayout={this.onLayout}>
+        <View style={this.props.style} ref={this._register} collapsable={false}>
           { rest }
         </View>
       );
