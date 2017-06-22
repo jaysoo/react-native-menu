@@ -1,6 +1,6 @@
-const TimerMixin = require('react-timer-mixin');
+const TimerMixin = require("react-timer-mixin")
 
-let nextID = 1;
+let nextID = 1
 
 module.exports = (React, ReactNative, { constants, model, styles }) => {
   const {
@@ -8,35 +8,42 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
     TouchableWithoutFeedback,
     ScrollView,
     View,
-    BackAndroid
-  } = ReactNative;
-  const AnimatedOptionsContainer = require('./makeAnimatedOptionsContainer')(React, ReactNative);
+    BackHandler
+  } = ReactNative
+  const AnimatedOptionsContainer = require("./makeAnimatedOptionsContainer")(
+    React,
+    ReactNative
+  )
 
   // Calls a function once, then never again.
-  const once = (fn) => {
-    let called = false;
+  const once = fn => {
+    let called = false
     return (...args) => {
       if (!called) {
-        called = true;
-        fn(...args);
+        called = true
+        fn(...args)
       }
-    };
-  };
+    }
+  }
 
-  const defaultOptionsContainerRenderer = (options) => (
+  const defaultOptionsContainerRenderer = options =>
     <ScrollView>
       {options}
     </ScrollView>
-  );
 
   const makeOptions = (options, { top, right }) => {
-    const { optionsContainerStyle, renderOptionsContainer = defaultOptionsContainerRenderer} = options.props;
+    const {
+      optionsContainerStyle,
+      renderOptionsContainer = defaultOptionsContainerRenderer
+    } = options.props
     return (
-      <AnimatedOptionsContainer style={[ styles.optionsContainer, optionsContainerStyle, { top, right }]}>
-        { renderOptionsContainer(options) }
+      <AnimatedOptionsContainer
+        style={[styles.optionsContainer, optionsContainerStyle, { top, right }]}
+      >
+        {renderOptionsContainer(options)}
       </AnimatedOptionsContainer>
-    );
-  };
+    )
+  }
 
   const NULL_HOOKS = {
     didOpen: () => {},
@@ -49,14 +56,14 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
    * properly.
    */
   const MenuContext = React.createClass({
-    displayName: 'MenuContext',
+    displayName: "MenuContext",
     propTypes: {
-      detectBackAndroid: React.PropTypes.bool,
+      detectBackHandler: React.PropTypes.bool
     },
     getDefaultProps() {
       return {
-        detectBackAndroid: true,
-      };
+        detectBackHandler: true
+      }
     },
     mixins: [TimerMixin],
 
@@ -65,49 +72,52 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
       return this.state.openedMenu
     },
     openMenu(name) {
-      const handle = ReactNative.findNodeHandle(this._menus[name].ref);
+      const handle = ReactNative.findNodeHandle(this._menus[name].ref)
       UIManager.measure(handle, (x, y, w, h, px, py) => {
-        this._menus[name].measurements = { x, y, w, h, px, py };
+        this._menus[name].measurements = { x, y, w, h, px, py }
 
         this.setState({
           openedMenu: name,
-          menuOptions: this._makeAndPositionOptions(name, this._menus[name].measurements),
+          menuOptions: this._makeAndPositionOptions(
+            name,
+            this._menus[name].measurements
+          ),
           backdropWidth: this._ownMeasurements.w
-        });
+        })
 
-        this._activeMenuHooks = this._menus[name];
-        this._activeMenuHooks && this._activeMenuHooks.didOpen();
-      });
+        this._activeMenuHooks = this._menus[name]
+        this._activeMenuHooks && this._activeMenuHooks.didOpen()
+      })
     },
     closeMenu() {
       if (this.props.onCloseMenu) {
         this.props.onCloseMenu(this.state)
       }
       this.setState({
-        openedMenu: '',
+        openedMenu: "",
         menuOptions: null
-      });
+      })
 
-      this._activeMenuHooks && this._activeMenuHooks.didClose();
-      this._activeMenuHooks = NULL_HOOKS;
+      this._activeMenuHooks && this._activeMenuHooks.didClose()
+      this._activeMenuHooks = NULL_HOOKS
     },
     toggleMenu(name) {
       if (this.state.openedMenu === name) {
-        this.closeMenu(name);
+        this.closeMenu(name)
       } else {
-        this.openMenu(name);
+        this.openMenu(name)
       }
     },
 
     // Private and lifecycle methods
     getInitialState() {
       return {
-        openedMenu: '',
+        openedMenu: "",
         menuOptions: null,
         optionsTop: 0,
         optionsRight: 0,
         backdropWidth: 0
-      };
+      }
     },
     childContextTypes: {
       menuController: model.IMenuController
@@ -121,83 +131,102 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
         unregisterMenu: this._unregisterMenu,
         registerOptionsElement: this._registerOptionsElement,
         makeName: this._makeName
-      };
-      return { menuController };
+      }
+      return { menuController }
     },
     componentWillMount() {
-      this._menus = {};
-      this._options = {};
+      this._menus = {}
+      this._options = {}
       // Only do this once on initial layout.
-      this.onLayout = once(this.onLayout);
+      this.onLayout = once(this.onLayout)
     },
-    handleBackAndroid() {
-      if (this.isMenuOpen()){
-        this.closeMenu();
-        return true;
+    handleBackHandler() {
+      if (this.isMenuOpen()) {
+        this.closeMenu()
+        return true
       }
-      return false;
+      return false
     },
     onLayout() {
-      const handle = ReactNative.findNodeHandle(this.refs.Container);
+      const handle = ReactNative.findNodeHandle(this.refs.Container)
       UIManager.measure(handle, (x, y, w, h, px, py) => {
-        this._ownMeasurements = {x, y, w, h, px, py};
-      });
+        this._ownMeasurements = { x, y, w, h, px, py }
+      })
     },
     _registerMenu(name, hooks) {
       if (this._menus[name]) {
-        console.warn(`Menu ${name} has already been registered in this context. Please provide a different name.`);
+        console.warn(
+          `Menu ${name} has already been registered in this context. Please provide a different name.`
+        )
       }
 
-      if (this.props.detectBackAndroid){
-        BackAndroid.removeEventListener('hardwareBackPress', this.handleBackAndroid);  //Override previous listener
-        BackAndroid.addEventListener('hardwareBackPress', this.handleBackAndroid);
+      if (this.props.detectBackHandler) {
+        BackHandler.removeEventListener(
+          "hardwareBackPress",
+          this.handleBackHandler
+        ) //Override previous listener
+        BackHandler.addEventListener(
+          "hardwareBackPress",
+          this.handleBackHandler
+        )
       }
-      this._menus[name] = hooks;
+      this._menus[name] = hooks
     },
     _unregisterMenu(name) {
-      delete this._menus[name];
-      delete this._options[name];
+      delete this._menus[name]
+      delete this._options[name]
     },
     _registerOptionsElement(name, options) {
       // If options are already set and visible, skip the update.
       if (this.state.menuOptions === options) {
-        return;
+        return
       }
-      this._options[name] = options;
+      this._options[name] = options
       // If the menu is already open, re-render the options.
       this.setTimeout(() => {
         if (this.state.openedMenu === name) {
-          this.setState({ menuOptions: this._makeAndPositionOptions(name, this._menus[name].measurements) });
+          this.setState({
+            menuOptions: this._makeAndPositionOptions(
+              name,
+              this._menus[name].measurements
+            )
+          })
         }
-      }, 16);
+      }, 16)
     },
     _makeName() {
-      return `menu-${nextID++}`;
+      return `menu-${nextID++}`
     },
     _makeAndPositionOptions(name, menuMeasurements) {
-      const options = this._options[name];
-      const { w: menuWidth, px: menuPX, py: menuPY } = menuMeasurements;
-      const { w: ownWidth, px: ownPX, py: ownPY } = this._ownMeasurements;
-      const optionsTop = menuPY - ownPY;
-      const optionsRight = ownWidth + ownPX - menuPX - menuWidth;
-      return makeOptions(options, { top: optionsTop, right: optionsRight });
+      const options = this._options[name]
+      const { w: menuWidth, px: menuPX, py: menuPY } = menuMeasurements
+      const { w: ownWidth, px: ownPX, py: ownPY } = this._ownMeasurements
+      const optionsTop = menuPY - ownPY
+      const optionsRight = ownWidth + ownPX - menuPX - menuWidth
+      return makeOptions(options, { top: optionsTop, right: optionsRight })
     },
 
     render() {
       return (
         <View ref="Container" onLayout={this.onLayout} style={{ flex: 1 }}>
           <View style={this.props.style}>
-            { this.props.children }
+            {this.props.children}
           </View>
           <TouchableWithoutFeedback onPress={this.closeMenu}>
-            <View style={[ styles.backdrop
-                          , this.state.openedMenu ? { width: this.state.backdropWidth, top: 0, bottom: 0 }: null ]}/>
+            <View
+              style={[
+                styles.backdrop,
+                this.state.openedMenu
+                  ? { width: this.state.backdropWidth, top: 0, bottom: 0 }
+                  : null
+              ]}
+            />
           </TouchableWithoutFeedback>
-          { this.state.menuOptions }
+          {this.state.menuOptions}
         </View>
       )
     }
-  });
+  })
 
-  return MenuContext;
-};
+  return MenuContext
+}
