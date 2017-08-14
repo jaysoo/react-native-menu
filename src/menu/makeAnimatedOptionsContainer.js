@@ -1,12 +1,12 @@
 module.exports = (React, ReactNative) => {
-  const { Animated } = ReactNative;
+  const { Animated, Platform } = ReactNative;
   const TimerMixin = require('react-timer-mixin');
 
   // A component that scales in when mounted.
   const AnimatedOptionsContainer = React.createClass({
     mixins: [TimerMixin],
     getInitialState() {
-      return { scaleAnim: new Animated.Value(0.001) };
+      return { scaleAnim: new Animated.Value(Platform.OS === "android" ? 0.01 : 0.001) };
     },
     componentDidMount() {
       this.setTimeout(() => {
