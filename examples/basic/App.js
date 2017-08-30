@@ -1,14 +1,5 @@
-'use strict';
-
-const React = require('react');
-const ReactNative = require('react-native');
-const {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} = ReactNative;
-
+import React from 'react'
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Menu, {
   MenuContext,
   MenuOptions,
@@ -16,7 +7,7 @@ import Menu, {
   MenuTrigger
 } from 'react-native-menu';
 
-const Example = React.createClass({
+export default React.createClass({
   componentDidMount() {
     // We can use the public context API to open/close/toggle the menu.
     //setInterval(() => {
@@ -79,10 +70,10 @@ const Example = React.createClass({
               {
                 this.state.firstMenuDisabled
                   ? (
-                    <MenuOption value={false}>
-                      <Text>enable first menu</Text>
-                    </MenuOption>
-                  )
+                  <MenuOption value={false}>
+                    <Text>enable first menu</Text>
+                  </MenuOption>
+                )
                   : (
                   <MenuOption value={true}>
                     <Text>disable first menu</Text>
@@ -181,5 +172,3 @@ const styles = StyleSheet.create({
     height: 200
   }
 });
-
-module.exports = Example;

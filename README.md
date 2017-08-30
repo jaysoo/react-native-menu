@@ -14,6 +14,12 @@ The API is very flexible so you are free to extend the styling and behaviour.
 $ npm install react-native-menu --save
 ```
 
+Or with yarn:
+
+```
+$ yarn add react-native-menu
+```
+
 ## Demo
 
 | iOS | Android |
@@ -196,13 +202,13 @@ Props:
 Install dev modules:
 
 ```
-npm install
+yarn
 ```
 
 ### Run unit tests
 
 ```
-npm run test:unit
+yarn test:unit
 ```
 
 ### Run integration tests
@@ -210,7 +216,7 @@ npm run test:unit
 Make sure you have a connected android device. You find list devices using `adb devices`.
 
 ```
-npm run test:integration
+yarn test:integration
 ```
 
 ## Contributing

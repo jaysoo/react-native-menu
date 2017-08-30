@@ -1,0 +1,74 @@
+{
+  "name": "react-native-menu",
+  "version": "0.23.0",
+  "description": "A flexible dropdown menu component for Android and iOS that is similar to Android's Spinner.",
+  "repository": "https://github.com/jaysoo/react-native-menu",
+  "scripts": {
+    "install:example": "cd Example && npm install",
+    "build:android": "cd Example/android && ./gradlew assembleRelease",
+    "start:appium": "appium",
+    "test:setup": "npm run install:example && npm run build:android",
+    "test:unit": "jest",
+    "test:feature": "concurrently 'npm run start:appium' 'npm run test:feature:suite'",
+    "test:feature:suite": "mocha --require babel-core/register test/integration",
+    "test": "npm run test:setup && npm run test:unit && npm run test:integration"
+  },
+  "main": "src/index.js",
+  "files": [
+    "android.demo.gif",
+    "ios.demo.gif",
+    "README.md",
+    "LICENSE",
+    "src"
+  ],
+  "keywords": [
+    "react-native",
+    "react",
+    "menu",
+    "spinner",
+    "dropdown",
+    "react-component",
+    "ios",
+    "android"
+  ],
+  "author": "Jack Hsu <jack.hsu@gmail.com> (http://jaysoo.ca/)",
+  "license": "ISC",
+  "devDependencies": {
+    "appium": "^1.4.16",
+    "babel-core": "^6.4.0",
+    "babel-jest": "*",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-react-native": "^3.0.1",
+    "babel-preset-stage-2": "^6.3.13",
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.2.0",
+    "colors": "^1.1.2",
+    "concurrently": "^2.0.0",
+    "jest": "^20.0.4",
+    "mocha": "^2.3.4",
+    "react": "16.0.0-alpha.13",
+    "react-dom": "16.0.0-alpha.13",
+    "react-native": "^0.47.2",
+    "react-test-renderer": "16.0.0-alpha.13",
+    "sinon": "^1.17.2",
+    "wd": "^0.4.0"
+  },
+  "dependencies": {
+    "create-react-class": "^15.6.0",
+    "prop-types": "^15.5.10",
+    "react-timer-mixin": "^0.13.3"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/Example/",
+      "<rootDir>/examples/"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/?(*.)test.js"
+    ],
+    "verbose": true
+  }
+}
