@@ -114,7 +114,7 @@ Methods:
 Props:
 
 
-- 'detectBackAndroid' -- If true, menu context detects an Android hardware back press, closes menu and stops it from propagating and potentially causing bugs. (Default: true)
+- 'detectBackHandler' -- If true, menu context detects an Android hardware back press, closes menu and stops it from propagating and potentially causing bugs. (Default: true)
 - `style` -- Overrides default style properties (user-defined style will take priority)
 - `onCloseMenu` -- Handler that will be called with the state of `MenuContext`, if defined.
 
