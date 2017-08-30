@@ -1,8 +1,10 @@
 const TimerMixin = require('react-timer-mixin');
+const PropTypes = require('prop-types');
+const createClass = require('create-react-class');
 
 let nextID = 1;
 
-module.exports = (React, ReactNative, { constants, model, styles }) => {
+module.exports = (React, ReactNative, { model, styles }) => {
   const {
     UIManager,
     TouchableWithoutFeedback,
@@ -48,10 +50,10 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
    * top-level methods. It also allows the <MenuOptions/> element to be placed
    * properly.
    */
-  const MenuContext = React.createClass({
+  return createClass({
     displayName: 'MenuContext',
     propTypes: {
-      detectBackHandler: React.PropTypes.bool,
+      detectBackHandler: PropTypes.bool,
     },
     getDefaultProps() {
       return {
@@ -198,6 +200,4 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
       )
     }
   });
-
-  return MenuContext;
 };

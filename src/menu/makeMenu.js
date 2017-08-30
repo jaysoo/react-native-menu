@@ -1,4 +1,5 @@
-const TimerMixin = require('react-timer-mixin');
+const PropTypes = require('prop-types');
+const createClass = require('create-react-class');
 
 module.exports = (React, ReactNative, { constants, model, styles }) => {
   const {
@@ -6,13 +7,13 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
     View
   } = ReactNative;
 
-  const Menu = React.createClass({
+  return createClass({
     displayName: 'Menu',
     propTypes: {
-      name: React.PropTypes.string,
-      onSelect: React.PropTypes.func,
-      onOpen: React.PropTypes.func,
-      onClose: React.PropTypes.func
+      name: PropTypes.string,
+      onSelect: PropTypes.func,
+      onOpen: PropTypes.func,
+      onClose: PropTypes.func
     },
     getDefaultProps() {
       return {
@@ -25,7 +26,7 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
       menuController: model.IMenuController
     },
     childContextTypes: {
-      getClosestMenuName: React.PropTypes.func
+      getClosestMenuName: PropTypes.func
     },
     getChildContext() {
       return { getClosestMenuName: () => this._name };
@@ -94,6 +95,4 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
       );
     }
   });
-
-  return Menu;
 };

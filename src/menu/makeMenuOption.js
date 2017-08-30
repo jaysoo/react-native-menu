@@ -1,7 +1,9 @@
+const createClass = require('create-react-class');
+
 module.exports = (React, ReactNative, { model, styles }) => {
   const { View, TouchableWithoutFeedback } = ReactNative;
 
-  const MenuOption = React.createClass({
+  return createClass({
     displayName: 'MenuOption',
     contextTypes: {
       menuController: model.IMenuController
@@ -26,6 +28,4 @@ module.exports = (React, ReactNative, { model, styles }) => {
       );
     }
   });
-
-  return MenuOption;
 };
