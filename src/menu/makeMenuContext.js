@@ -32,7 +32,7 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
   const makeOptions = (options, { top, right }) => {
     const { optionsContainerStyle, renderOptionsContainer = defaultOptionsContainerRenderer} = options.props;
     return (
-      <AnimatedOptionsContainer style={[ styles.optionsContainer, optionsContainerStyle, { top, right }]}>
+      <AnimatedOptionsContainer style={[ styles.optionsContainer, { top, right }, optionsContainerStyle]}>
         { renderOptionsContainer(options) }
       </AnimatedOptionsContainer>
     );
