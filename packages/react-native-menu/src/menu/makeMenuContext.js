@@ -130,7 +130,7 @@ module.exports = (React, ReactNative, { model, styles }) => {
       this._menus = {};
       this._options = {};
       // Only do this once on initial layout.
-      this.onLayout = once(this.onLayout);
+      //this.onLayout = once(this.onLayout);
     },
     handleBackHandler() {
       if (this.isMenuOpen()){
