@@ -11,7 +11,7 @@ jobs:
         id: stale
         uses: actions/stale@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DAYS_BEFORE_STALE: 20
           DAYS_BEFORE_CLOSE: 10
           OPERATIONS_PER_RUN: 5000
