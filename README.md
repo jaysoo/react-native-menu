@@ -24,7 +24,7 @@ $ yarn add react-native-menu
 
 | iOS | Android |
 | --- | ------- |
-| ![](./ios.demo.gif) | ![](./android.demo.gif) |
+| ![](./react-native-menu/packages/react-native-menu/ios.demo.gif) | ![](./react-native-menu/packages/react-native-menu/android.demo.gif) |
 
 ## Basic Usage
 
